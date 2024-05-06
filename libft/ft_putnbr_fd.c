@@ -29,6 +29,7 @@
 // 		ft_putnbr_fd(num, fd);
 // 	ft_putchar_fd(value, 1);
 // }
+//	This was wrong because the ft_putchar_fd was set to 1 instead of fd.
 
 void	ft_putnbr_fd(int n, int fd)
 {
