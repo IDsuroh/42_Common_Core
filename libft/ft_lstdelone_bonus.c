@@ -20,6 +20,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 	free(lst);
 }
 
+// be aware while using this function because if this function is used before linking nodes, it will work like a lstclear.
 // void	del(void *content)
 // {
 // 	free(content);
