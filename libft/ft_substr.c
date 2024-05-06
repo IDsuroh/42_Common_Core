@@ -29,7 +29,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	mem = malloc(sizeof(char) * (value + 1));
 	if (!mem)
 		return (NULL);
-	ft_memmove(mem, s + start, value);
+	ft_memmove(mem, s + start, value); // would put 'ft_memcpy' because there is no memory overlap in the first place.
 	mem[value] = '\0';
 	return ((char *)mem);
 }
