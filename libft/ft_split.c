@@ -70,7 +70,7 @@ char	**ft_split(const char *s, char c)
 		mem[i] = (char *)ft_calloc(sizeof(char), (count + 1));
 		if (!mem[i])
 			return (ft_free(mem, i));
-		ft_memmove(mem[i], s, count);
+		ft_memmove(mem[i], s, count); // would put 'ft_memcpy' because there is no memory overlap in the first place.
 		mem[i++][count] = '\0';
 		s += count;
 	}
