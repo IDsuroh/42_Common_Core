@@ -1,0 +1,15 @@
+Title Number Language Greetings
+
+LANGUAGES_I_KNOW
+
+ 0 1 ENGLISH Hello
+ 0 2 KOREAN 안녕하세요
+
+LANGUAGES_I_WANT_TO_LEARN
+
+ 0 1 PORTUGUESE Olá
+ 0 2 MANDARIN 你好
+ 0 3 GERMAN Hallo
+ 0 4 JAPANESE こんにちは
+ 0 5 THAI สวัสดี
+ 0 6 CANTONESE 你好
