@@ -1,0 +1,416 @@
+---------------------------------------------------------------Notes-----------------------------------------------------------------
+
+***BASE CONCEPT***
+
+	Virtual Machine - virtualization concept that allows different OS to run in the same hardware.
+
+	Hypervisor - technology that allows virtualization to be possible. Allows multiple virtual computers to be hosted into just one computer.
+
+	e.g. VirtualBox by Oracle
+
+	- Creates virtual CPU, RAM, Storage
+	- Hardware resources are shared
+	- Completely isolated
+
+	Type 2 & Type 1 Hypervisor
+
+	Type 1 = Bare Metal Hypervisor
+	Big servers
+	- Hypervisor is installed directly on the Hardware.
+	- Controls the Hardware resources directly.
+		e.g. vmware. Microsoft Hyper-v
+	- For Servers.
+	- Big Companies and Big Cloud Platforms utilize this hypervisor.
+	- Efficient usage of hardware resources.
+	- Abstraction of the Operating System from the hardware.
+	- Can have backups or SNAPSHOTS of the 'Virtual Machine Image' (VMI).
+
+---------------------------------------------------------***WHAT IS LVM?***----------------------------------------------------------
+
+LVM (Logical Volume Manager)
+	- Allows the creation of 'groups' of disks or partitions that can be assembled into a single (or multiple) filesystems:
+	- Can be used for any mount point except '/boot'
+		- GRUB(Grand Unified Bootlader) cannot read LVM metadata
+		* What is GRUB?
+		Program that runs before the OS to ensure the kernel runs properly.
+	
+	- LVM is flexible for resizing of volumes.
+	- allows SNAPSHOTS or copies of your logical volume
+	
+	EXAMPLE LAYOUT OF AN LVM GROUP
+	
+file system - directory where the file systems or logical volumes are mounted too.
+----------- [/]	      [/var]   [swap]    [/home]
+Top ---- LV [lv_root] [lv_var] [lv_swap] [lv_home]
+	Logical Volume - individual compoments that are partitions.
+Above -- VG [vg_base]
+	Volume Group - encompasses all physical volumes.
+Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]
+	Physical Volume - actual discs on the system.
+	
+	- Volume Group contains all the Physical Volumes
+	- Logical Volumes are Volume Group carved up into smaller portions that are used for specific functions.
+	- Logical Volumes or partitions need file system.
+		e.g. XFS, ext4, or more
+		
+	COMMANDS for LVM:
+	
+	ls______
+		-pvs = physical volume scan
+			lists out the physical volumes in an LVM group.
+		-vgs = volume group scan
+			lists out the volume groups within an LVM group.
+		-lvs = logical volume scan
+			lists out the volumes within an LVM group.
+			
+---------------------------------------***Linux Filesystem - How each Directory is used***-------------------------------------------
+	
+	ls /
+	
+	/bin
+	- directory which contains important executable programs and core operating system commands.
+	- symbolically linked to /usr/bin
+	
+	/boot
+	- directory which contains the files needed by the bootloader.
+	- initial ram file system included as well as the kernel.
+	
+	/dev
+	- contains the device files.
+	- dynamically created based on the various physical and virtual devices that are connected to the system.
+	- shows what connected to the system.
+	
+	/etc
+	- contains critical configuration files and startup scripts.
+	- use a lot to configure and edit SSH keys
+	e.g. \\\ sudo vim /etc/ssh/sshd_config \\\
+	
+	/home
+	- location of the individual user home directories.
+	- my documents directory in Windows.
+	- in linux, the directory at start is the personal home directory.
+	- contains configuration files specific to the user.
+	
+	/lib
+	- hold the shared libraries the system's programs will need.
+	- enable multiple programs to share code with each other.
+	- increase efficiency.
+	e.g. lib32, lib64, or more
+	- like /bin symbolically linked to the user/lib.
+	
+	/lost+found
+	- directory where broken files might reside after a system crash.
+	
+	/media
+	- mount point for file systems stored on a removable media.
+	- usb drives show here.
+	
+	/mnt
+	- where devices will be mounted temporarily.
+	- to attach a network storage server for archive.
+	
+	/opt
+	- is rarely used.
+	- optional software packages are placed by a vendor.
+	
+	/proc
+	- sudo file system.
+		*sudo file system?
+		- file system that is created at startup and disappears at shutdown.
+	- contains information about every running process in the machine.
+	- each active process has it's own subdirectory.
+	- contains information about system.
+	
+	/root
+	- home directory for the user.
+	- has ultimate control over the system.
+	- cannot view the contents of this directory without sudo.
+	
+	/run
+	- contains information describing the system since boot time.
+	- log in info, or deamon info.
+	
+	/sbin
+	- contains system essential files.
+	- similar to the bin directory.
+	- little practical difference between bin.
+	- symbolically linked to /usr/sbin.
+	
+	/srv
+	- occasionally used as a folder for files served by a web server or other server mechanisms.
+	- rarely used.
+	
+	/sys
+	- contains information about devices, drivers, and kernel features running in the system.
+	- like /proc, but better structured.
+	
+	/tmp
+	- for temporary files
+	
+	/usr
+	- contains most of the programs and utilities the system will be running.
+	- not the same with user directory.
+	- place most of the programs actualy reside.
+	- where the bulk of the programs are located.
+	- shared between all users and read only except via root or sudo command.
+	
+	/var
+	- system specific variable files.
+	- logs, temporary message files, spool files.
+	
+	[<Special note>]
+	
+	/dev
+	- contains special files(device files) corresponding to physical devices or system components.
+
+	/media
+	- regular directory used to mount removable media like CD-ROMs, floppy disks, etc.
+	
+	/mnt
+	- regular directory used to mount other filesystems, usually for a short period of time.
+	
+	[/dev] - is essential to the operating system and it cannot be removed.
+	[/media] & [/mnt] - placeholder directories.
+	--- removing them wouldn't influence the operating system core operation. ---
+	
+	[/dev] contains a reference to a physical CD-ROM drive
+	[/mount] might contain a subdirectory which allows access to the files stored on the disc insterted to the same CD-ROM drive.
+	
+	Typically, [/dev] (device) is where all physical devices are first mounted and [/mnt] (mount) is where additional link to the removable media is made.
+	[/mnt] directory and subdirectories are intended for mount points to removable or temporary files storage.
+	
+	WHAT IS A MOUNT POINT?
+	- directory on a file system that is logically linked to another file system.
+	- used to make the adata on a different physical sotrage drive easily available in a folder structure.
+	- Mount points are fundamental to Unix, Linux, and MacOS.
+	
+	Process:
+	
+	1. Plug USB to Linux. ->
+	2. Detect hardware device and puts into file system at /dev/sdc1. ->
+	3. Then execute command 'mount /dev/sdc1 /mnt/usb' to mount the file system on the USB drive to the mount point location '/mnt/usb'
+	4. To make the data more convenient, create an additional mount point with the command 'mount /dev/sdc1 /home/john/files' to put the data in the home directory.
+
+(The information about where the default mount points are loaded at system startup is located in /etc/fstab for many Linux distributions.)
+	*fstab is a log.
+	
+-------- Windows can use mount points, but it is not common.
+{Removable storage devices like USB drives are automatically mounted at locations within the /mnt or /media directory. But in Windows, drive letters like C:, D:, or more, serve as mount points.}
+
+------------------------------------------------------------*** SSH ***--------------------------------------------------------------
+
+	WHAT IS SSH?
+	- stands for secure shell.
+	- creating a shell on another machine remotely over the internet or local area connection or some network connection.
+	- opens a series of channels that allows to multiplex or have multiple connections over the data.
+	- can use SSH for things other than secure shell.
+	e.g.
+		can send files
+		remotely edit files using 'SFTP'
+		tunnel 'http' traffic and use like a 'VPN'
+	
+	How an SSH packet looks like:
+				__________________
+				| 	         |	 {\Shows the length of the packet. Doesn't
+				| Packet length  |	 include the packet length segment. 4 bytes in
+				|________________|	 size./}
+				|	         |	 {\Shows length of the padding data. 1 byte in
+				| Padding length |	 size. Padding length is mixed in with Payload
+				|________________|	 before it is encrypted./} 
+				|	         |	 { \\\Main data of send. Pieces of a file.///
+				|    Payload     |	 Padding length + Payload + Padding data
+				|________________|			\All encrypted./	   }
+				|	         | 
+				|  Padding data  |
+				|________________|
+				|_______MAC______|	 { Message Authentication Code.	   }
+
+	*Packet length and MAC are not encrypted.
+	
+	Packet length:
+		- Because TCP is going to use the packet length to identify how big the packet is.
+		- TCP is going to handle the flow of the data from one point to another.
+		
+	MAC (Message authentication code):
+		- necessary to verify that the Payload is not corrupted.
+		- the 'hash' of the Payload.
+	
+	FUN FACT!
+{	Before SSH, there were other protocls to handle the remote connection like telnet. It would send everything into plain text. Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal login credentials, details, and so on and so forth.					}
+
+		*** AWK ***
+
+	AWK is a command line utility and it's a text processed utility which means when given a text, it can grab certain columns, rows, or fields from that text.
+	
+-------------------------------------------------------!!!How awk is used!!!---------------------------------------------------------
+	
+
+		ps | awk '{print $1}' 
+		------- prints the data listed on the 1st column.
+
+
+		ps | awk '{print $0}'
+		------- the same with just ps.
+
+	
+	To get every user on the system:
+
+	    
+		awk -F ":" '{print $1}' /etc/passwd
+			(-F for field seperator)
+
+
+		awk -F ":" '{printf $1"\t"$6"\t"$7}' /etc/passwd
+
+		
+		awk 'BEGIN{FS=":"; OFS="-"} {print $1,$6,$7}' /etc/passwd
+
+	
+		awk -F "/" '/^\// {print $NF}' /etc/shells | uniq |sort
+			(Shows only the last part of the column without repetition of names and sort by alphabetical order.)
+
+	
+		awk '/\/(random)/\/(random)/ {print $1"\t"$2 + $3}'
+			(The symbol '\' works like a filter so it filters out information other than /(random). Can calculate numbers 								by using + - and other symbols in between columns.)
+
+		
+		awk 'length($0) > 7' /etc/shells
+			(Will only return the lines that are greater than 7.)
+
+		
+		awk '{ if($NF == "/bin/fish") print $0}'
+			(If the last field ($NF) is "/bin/fish", print all.)
+
+	
+		awk 'BEGIN { for(i=1; i<=10; i++) print "The square root of", i, "is", i*i; }'
+	
+			The square root of 1 is 1
+			The square root of 2 is 4
+			The square root of 3 is 9
+			The square root of 4 is 16
+			The square root of 5 is 25
+			The square root of 6 is 36
+			The square root of 7 is 49
+			The square root of 8 is 64
+			The square root of 9 is 81
+			The square root of 10 is 100
+
+
+		awk '$1 ~ /^[a]/ {print $0}' .zshrc 
+			(The first column need to be matching this search pattern [The beginning of the line need to be either 'b' or a 'c']. Then print the entire line.)	  
+
+			alias val='valgrind'
+			alias fullval='valgrind --leak-check=full'
+			alias norm='norminette -R CheckForbiddenSourceHeader'
+			alias 42cc='cc -Wall -Werror -Wextra'
+
+
+		awk '{print substr($1, 4)}' numbered.txt
+			(Print contexts of 1st column but not until the 4th character.)
+	
+
+		awk 'match($0, /o/) { print "\n" $0 "\n has \"o\" character at " RSTART " (index number)"}' numbered.txt 
+			(Find every window manager in that list that has the letter 'o' in the name. The function RSTART is the index location where the letter 'o' appeared at the line.)
+		
+			 0 1 ENGLISH Hello
+			 has "o" character at 18 (index number)
+
+			 0 3 GERMAN Hallo
+			 has "o" character at 17 (index number)
+		
+
+		awk 'NR==7, NR==11 {print NR, $0}' numbered.txt
+			(NR [number of records] == line numbers.)
+		
+			7 
+			8 LANGUAGES_I_WANT_TO_LEARN
+			9 
+			10  0 1 PORTUGUESE Olá
+			11  0 2 MANDARIN 你好
+		
+	
+		awk 'NR==7, NR==11 {print $0}' numbered.txt 
+
+			LANGUAGES_I_WANT_TO_LEARN
+	
+			 0 1 PORTUGUESE Olá
+			 0 2 MANDARIN 你好
+		
+		
+		awk 'END {print NR}' numbered.txt
+			(Prints out the number of lines.)
+		
+-------------------------Users and Groups-----------------------
+
+	How to make Users (in Linux):
+	
+	in Terminal:
+	
+	adduser "Name"
+	
+	useradd "Name" <- more manual command
+
+
+	Signing in as other Users:
+
+	logout
+	
+	
+	Deleting Users (in root User):
+	
+	deluser "Name"
+	
+
+	Changing the User's Password (in root User):
+	
+	passwd "Name"
+	passwd <- change current user password
+
+
+		Concepts:
+			Primary and Secondary Groups
+				- 1 Primary Group
+				- 15 Secondary Groups
+				- Every new file that is created is owned by User's Primary Group
+				
+			Primary Group
+				- Anyone who is apart of the group has access/permission to the file
+				
+			Secondary Groups
+				- Users can belong to multiple secondary groups
+				- Can have files in a secondary group but only users in that specific group
+				
+			- Each user should have their own unique Primary Group and the Group is named exactly the same as the user.
+				
+	To add group:
+	
+	addgroup "Group Name"
+	
+	
+	Assining User to Group:
+	
+	usermod -a -G "Group Name" "User Name"
+		(a means to append, G means group)
+
+
+	To see which group the User belongs to:
+	
+	groups "User"
+	
+	groups <- see group of the current user
+	
+	
+	Removing User from Group:
+	
+	gpasswd -d "User Name" "Group Name"
+		(d means delete)
+		
+	
+	Editing Permissions:
+	
+	
+
+
+
+
+
