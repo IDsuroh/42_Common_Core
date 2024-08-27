@@ -408,7 +408,29 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]
 	
 	Editing Permissions:
 	
+		visudo <- opens /etc/sudoers.tmp <- need permission 
+		(Shouldn't directly modify the /etc/sudoers file because when there is an error in the syntax since /etc/sudoers is only modifiable by root and will be stuck
+		unless there is another way of gaining root. It should be run in safety guaranteed way like the visudo command.)
+
+	go to ->  # User privilage specification
+		root	ALL=(ALL:ALL) ALL
+		User	ALL=/usr/bin/top, [so on and so forth]
+			-> User now have access to /top command
+	go to -> # Allow members of group sudo to execute any command
+		%sudo	ALL=(ALL:ALL) ALL
+		%python	ALL=/usr/bin/ls, /usr/bin/less, /usr/bin/apt
+			(/bin is where the standard commands are.)
+
+
+	Finding Command Locations:
+
+	which "Command Name"
+
 	
+	Deleting Groups:
+
+	delgroup "Group Name"
+
 
 
 
