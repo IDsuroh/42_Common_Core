@@ -253,9 +253,10 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing
 traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal
 login credentials, details, and so on and so forth.											}
-
-	***To see additional notes about SSH check the 'SSH_notes'.
-
+___________________________________________________________________________________________________________________________________________
+		***To see additional notes about SSH check the 'SSH_notes' in '/42_Common_Core/Born2beroot_notes/SSH_notes'.***
+___________________________________________________________________________________________________________________________________________
+	
 		*** AWK ***
 
 	AWK is a command line utility and it's a text processed utility which means when given a text, it can grab certain columns, rows, or fields from that text.
