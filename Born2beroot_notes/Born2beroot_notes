@@ -46,7 +46,7 @@ Top ---- LV [lv_root] [lv_var] [lv_swap] [lv_home]					^	^
 Above -- VG [vg_base]									^	^
 	Volume Group - encompasses all physical volumes.				^	^
 Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
-	Physical Volume - actual discs on the system.					^	^
+	Physical Volume - actual discs on the system.					^	^	-----------------------
 	
 	- Volume Group contains all the Physical Volumes
 	- Logical Volumes are Volume Group carved up into smaller portions that are used for specific functions.
