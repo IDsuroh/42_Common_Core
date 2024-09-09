@@ -1,0 +1,39 @@
+
+---------------------------------------------------------***WHAT IS LVM?***----------------------------------------------------------
+
+LVM (Logical Volume Manager)
+	- Allows the creation of 'groups' of disks or partitions that can be assembled into a single (or multiple) filesystems:
+	- Can be used for any mount point except '/boot'
+		- GRUB(Grand Unified Bootlader) cannot read LVM metadata
+		* What is GRUB?
+		Program that runs before the OS to ensure the kernel runs properly.
+	
+	- LVM is flexible for resizing of volumes.
+	- allows SNAPSHOTS or copies of your logical volume
+	
+	EXAMPLE LAYOUT OF AN LVM GROUP							^	^	read from bottom to top
+											^	^
+file system - directory where the file systems or logical volumes are mounted too.	^	^
+----------- [/]	      [/var]   [swap]    [/home]					^	^
+Top ---- LV [lv_root] [lv_var] [lv_swap] [lv_home]					^	^
+	Logical Volume - individual compoments that are partitions.			^	^
+Above -- VG [vg_base]									^	^
+	Volume Group - encompasses all physical volumes.				^	^
+Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
+	Physical Volume - actual discs on the system.					^	^	-----------------------
+	
+	- Volume Group contains all the Physical Volumes
+	- Logical Volumes are Volume Group carved up into smaller portions that are used for specific functions.
+	- Logical Volumes or partitions need file system.
+		e.g. XFS, ext4, or more
+		
+	COMMANDS for LVM:
+	
+	ls______
+		-pvs = physical volume scan
+			lists out the physical volumes in an LVM group.
+		-vgs = volume group scan
+			lists out the volume groups within an LVM group.
+		-lvs = logical volume scan
+			lists out the volumes within an LVM group.
+			
