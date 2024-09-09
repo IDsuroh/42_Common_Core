@@ -1,0 +1,95 @@
+
+
+		
+-------------------------Users and Groups-----------------------
+
+	How to make Users (in Linux):
+	
+	in Terminal:
+	
+	adduser "Name"
+	
+	useradd "Name" <- more manual command
+
+
+	Signing in as other Users:
+
+	logout
+	
+	
+	Deleting Users (in root User):
+	
+	deluser "Name"
+	
+
+	Changing the User's Password (in root User):
+	
+	passwd "Name"
+	passwd <- change current user password
+
+
+		Concepts:
+			Primary and Secondary Groups
+				- 1 Primary Group
+				- 15 Secondary Groups
+				- Every new file that is created is owned by User's Primary Group
+				
+			Primary Group
+				- Anyone who is apart of the group has access/permission to the file
+				
+			Secondary Groups
+				- Users can belong to multiple secondary groups
+				- Can have files in a secondary group but only users in that specific group
+				
+			- Each user should have their own unique Primary Group and the Group is named exactly the same as the user.
+				
+	To add group:
+	
+	addgroup "Group Name"
+	
+	
+	Assining User to Group:
+	
+	usermod -a -G "Group Name" "User Name"
+		(a means to append, G means group)
+
+
+	To see which group the User belongs to:
+	
+	groups "User"
+	
+	groups <- see group of the current user
+	
+	
+	Removing User from Group:
+	
+	gpasswd -d "User Name" "Group Name"
+		(d means delete)
+		
+	
+	Editing Permissions:
+	
+		visudo <- opens /etc/sudoers.tmp <- need permission 
+		(Shouldn't directly modify the /etc/sudoers file because when there is an error in the syntax since /etc/sudoers is only modifiable by root and
+			will be stuck unless there is another way of gaining root. It should be run in safety guaranteed way like the visudo command.)
+
+	go to ->  # User privilage specification
+		root	ALL=(ALL:ALL) ALL
+		User	ALL=/usr/bin/top, [so on and so forth]
+			-> User now have access to /top command
+	go to -> # Allow members of group sudo to execute any command
+		%sudo	ALL=(ALL:ALL) ALL
+		%python	ALL=/usr/bin/ls, /usr/bin/less, /usr/bin/apt
+			(/bin is where the standard commands are.)
+
+
+	Finding Command Locations:
+
+	which "Command Name"
+
+	
+	Deleting Groups:
+
+	delgroup "Group Name"
+
+
