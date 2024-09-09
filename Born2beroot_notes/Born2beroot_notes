@@ -241,7 +241,7 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	*Packet length and MAC are not encrypted.
 	
 	Packet length:
-		- Because TCP is going to use the packet length to identify how big the packet is.
+		- because TCP is going to use the packet length to identify how big the packet is.
 		- TCP is going to handle the flow of the data from one point to another.
 		
 	MAC (Message authentication code):
@@ -253,6 +253,8 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing
 traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal
 login credentials, details, and so on and so forth.											}
+
+	***To see additional notes about SSH check the 'SSH_notes'.
 
 		*** AWK ***
 
