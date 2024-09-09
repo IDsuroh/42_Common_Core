@@ -174,9 +174,11 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	--- removing them wouldn't influence the operating system core operation. ---
 	
 	[/dev] contains a reference to a physical CD-ROM drive
-	[/mount] might contain a subdirectory which allows access to the files stored on the disc insterted to the same CD-ROM drive.
+	[/mount] might contain a subdirectory which allows access to the files stored on the disc insterted
+		 to the same CD-ROM drive.
 	
-	Typically, [/dev] (device) is where all physical devices are first mounted and [/mnt] (mount) is where additional link to the removable media is made.
+	Typically, [/dev] (device) is where all physical devices are first mounted and [/mnt] (mount)
+	is where additional link to the removable media is made.
 	[/mnt] directory and subdirectories are intended for mount points to removable or temporary files storage.
 	
 	WHAT IS A MOUNT POINT?
@@ -188,14 +190,17 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	
 	1. Plug USB to Linux. ->
 	2. Detect hardware device and puts into file system at /dev/sdc1. ->
-	3. Then execute command 'mount /dev/sdc1 /mnt/usb' to mount the file system on the USB drive to the mount point location '/mnt/usb'
-	4. To make the data more convenient, create an additional mount point with the command 'mount /dev/sdc1 /home/john/files' to put the data in the home directory.
+	3. Then execute command 'mount /dev/sdc1 /mnt/usb' to mount the file system on
+		the USB drive to the mount point location '/mnt/usb'
+	4. To make the data more convenient, create an additional mount point with the command
+		'mount /dev/sdc1 /home/john/files' to put the data in the home directory.
 
 (The information about where the default mount points are loaded at system startup is located in /etc/fstab for many Linux distributions.)
 	*fstab is a log.
 	
 -------- Windows can use mount points, but it is not common.
-{Removable storage devices like USB drives are automatically mounted at locations within the /mnt or /media directory. But in Windows, drive letters like C:, D:, or more, serve as mount points.}
+{Removable storage devices like USB drives are automatically mounted at locations within the /mnt or /media directory.
+	But in Windows, drive letters like C:, D:, or more, serve as mount points.}
 
 ------------------------------------------------------------*** SSH ***--------------------------------------------------------------
 
@@ -236,7 +241,10 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 		- the 'hash' of the Payload.
 	
 	FUN FACT!
-{	Before SSH, there were other protocls to handle the remote connection like telnet. It would send everything into plain text. Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal login credentials, details, and so on and so forth.					}
+{	Before SSH, there were other protocls to handle the remote connection like telnet. It would send everything into plain text.
+Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing
+traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal
+login credentials, details, and so on and so forth.											}
 
 		*** AWK ***
 
@@ -297,7 +305,8 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 
 
 		awk '$1 ~ /^[a]/ {print $0}' .zshrc 
-			(The first column need to be matching this search pattern [The beginning of the line need to be either 'b' or a 'c']. Then print the entire line.)	  
+			(The first column need to be matching this search pattern [The beginning of the line need to be either 'b' or a 'c'].
+				Then print the entire line.)	  
 
 			alias val='valgrind'
 			alias fullval='valgrind --leak-check=full'
@@ -310,7 +319,8 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	
 
 		awk 'match($0, /o/) { print "\n" $0 "\n has \"o\" character at " RSTART " (index number)"}' numbered.txt 
-			(Find every window manager in that list that has the letter 'o' in the name. The function RSTART is the index location where the letter 'o' appeared at the line.)
+			(Find every window manager in that list that has the letter 'o' in the name. The function RSTART is the index location where the letter 'o'
+				appeared at the line.)
 		
 			 0 1 ENGLISH Hello
 			 has "o" character at 18 (index number)
@@ -409,8 +419,8 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	Editing Permissions:
 	
 		visudo <- opens /etc/sudoers.tmp <- need permission 
-		(Shouldn't directly modify the /etc/sudoers file because when there is an error in the syntax since /etc/sudoers is only modifiable by root and will be stuck
-		unless there is another way of gaining root. It should be run in safety guaranteed way like the visudo command.)
+		(Shouldn't directly modify the /etc/sudoers file because when there is an error in the syntax since /etc/sudoers is only modifiable by root and
+			will be stuck unless there is another way of gaining root. It should be run in safety guaranteed way like the visudo command.)
 
 	go to ->  # User privilage specification
 		root	ALL=(ALL:ALL) ALL
