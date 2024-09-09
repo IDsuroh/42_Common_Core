@@ -1,0 +1,140 @@
+
+---------------------------------------***Linux Filesystem - How each Directory is used***-------------------------------------------
+	
+	ls /
+	
+	/bin
+	- directory which contains important executable programs and core operating system commands.
+	- symbolically linked to /usr/bin
+	
+	/boot
+	- directory which contains the files needed by the bootloader.
+	- initial ram file system included as well as the kernel.
+	
+	/dev
+	- contains the device files.
+	- dynamically created based on the various physical and virtual devices that are connected to the system.
+	- shows what connected to the system.
+	
+	/etc
+	- contains critical configuration files and startup scripts.
+	- use a lot to configure and edit SSH keys
+	e.g. \\\ sudo vim /etc/ssh/sshd_config \\\
+	
+	/home
+	- location of the individual user home directories.
+	- my documents directory in Windows.
+	- in linux, the directory at start is the personal home directory.
+	- contains configuration files specific to the user.
+	
+	/lib
+	- hold the shared libraries the system's programs will need.
+	- enable multiple programs to share code with each other.
+	- increase efficiency.
+	e.g. lib32, lib64, or more
+	- like /bin symbolically linked to the user/lib.
+	
+	/lost+found
+	- directory where broken files might reside after a system crash.
+	
+	/media
+	- mount point for file systems stored on a removable media.
+	- usb drives show here.
+	
+	/mnt
+	- where devices will be mounted temporarily.
+	- to attach a network storage server for archive.
+	
+	/opt
+	- is rarely used.
+	- optional software packages are placed by a vendor.
+	
+	/proc
+	- sudo file system.
+		*sudo file system?
+		- file system that is created at startup and disappears at shutdown.
+	- contains information about every running process in the machine.
+	- each active process has it's own subdirectory.
+	- contains information about system.
+	
+	/root
+	- home directory for the user.
+	- has ultimate control over the system.
+	- cannot view the contents of this directory without sudo.
+	
+	/run
+	- contains information describing the system since boot time.
+	- log in info, or deamon info.
+	
+	/sbin
+	- contains system essential files.
+	- similar to the bin directory.
+	- little practical difference between bin.
+	- symbolically linked to /usr/sbin.
+	
+	/srv
+	- occasionally used as a folder for files served by a web server or other server mechanisms.
+	- rarely used.
+	
+	/sys
+	- contains information about devices, drivers, and kernel features running in the system.
+	- like /proc, but better structured.
+	
+	/tmp
+	- for temporary files
+	
+	/usr
+	- contains most of the programs and utilities the system will be running.
+	- not the same with user directory.
+	- place most of the programs actualy reside.
+	- where the bulk of the programs are located.
+	- shared between all users and read only except via root or sudo command.
+	
+	/var
+	- system specific variable files.
+	- logs, temporary message files, spool files.
+	
+	[<Special note>]
+	
+	/dev
+	- contains special files(device files) corresponding to physical devices or system components.
+
+	/media
+	- regular directory used to mount removable media like CD-ROMs, floppy disks, etc.
+	
+	/mnt
+	- regular directory used to mount other filesystems, usually for a short period of time.
+	
+	[/dev] - is essential to the operating system and it cannot be removed.
+	[/media] & [/mnt] - placeholder directories.
+	--- removing them wouldn't influence the operating system core operation. ---
+	
+	[/dev] contains a reference to a physical CD-ROM drive
+	[/mount] might contain a subdirectory which allows access to the files stored on the disc insterted
+		 to the same CD-ROM drive.
+	
+	Typically, [/dev] (device) is where all physical devices are first mounted and [/mnt] (mount)
+	is where additional link to the removable media is made.
+	[/mnt] directory and subdirectories are intended for mount points to removable or temporary files storage.
+	
+	WHAT IS A MOUNT POINT?
+	- directory on a file system that is logically linked to another file system.
+	- utilized to make the data on a different physical storage drive available, in a folder structure.
+	- Mount points are fundamental to Unix, Linux, and MacOS.
+	
+	Process:
+	
+	1. Plug USB to Linux. ->
+	2. Detect hardware device and puts into file system at /dev/sdc1. ->
+	3. Then execute command 'mount /dev/sdc1 /mnt/usb' to mount the file system on
+		the USB drive to the mount point location '/mnt/usb'
+	4. To make the data more convenient, create an additional mount point with the command
+		'mount /dev/sdc1 /home/john/files' to put the data in the home directory.
+
+(The information about where the default mount points are loaded at system startup is located in /etc/fstab for many Linux distributions.)
+	*fstab is a log.
+	
+-------- Windows can use mount points, but it is not common.
+{	Removable storage devices like USB drives are automatically mounted at locations within the /mnt or /media directory.
+		But in Windows, drive letters like C:, D:, or more, serve as mount points.					}
+
