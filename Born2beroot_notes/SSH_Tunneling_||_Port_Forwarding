@@ -1,0 +1,119 @@
+
+
+----------------------------------------SSH tunneling-------------------------------------------
+
+!!!Networking Ports!!!
+
+	<!!!FUN FACT!!!>
+		*Origin of the Term
+			- Sea Ports organize their docks using the name "Berth"
+			- So, ports have 'Berth 1', 'Berth 2', 'Berth 3', and so on and so forth.
+			- Cargo ships will be told which Berth they have to dock according to the number given to them.
+
+	
+	Networking Ports are similar to this.
+		- depending on the data being delivered, networking protocols assigned each shipment a specific port number.
+		- this tells the data where to be delivered.
+		- common port numbers are...
+			- 'Port 84 - HTTP' or 'Web Traffic'
+			- 'Port 22 - SSH traffic'
+
+
+	SSH tunneling
+		- a direct secure connection to a computer.
+		- allows SSH connection and data movement/forwarding from one port to another.
+
+	
+	Process of SSH tunneling
+
+	{between SSH client and SSH server with Windows 10 command prompt and OpenSSH
+						and can use putty which is a really good GUI for SSH commands.}
+
+	
+	******'Local' Port Forwarding******
+
+	e.g.) Scenario
+	{	When you want to remost desktop into the computer at home		}
+	{	but the safety measures of work blocks the remote desktop "3389".	}
+		* "3389" is the default port for Windows Remote Desktop
+
+	------> can use SSH tunnel to forward the blocked port "3389" to a different port number that is not blocked.
+	
+	(DEMO)	in terminal:
+			ssh -L 8181:192.168.0.135:3389 pi@192.168.0.135
+	     -L		     8181		     192.168.0.135				  3389			      pi     @		   192.168.0.135
+	{local port} / {new port to use} / {the name of the computer to remote} / {remote desktop port that is blocked} / {username and location of home SSH server}
+
+			log in to SSH server --> then open remote desktop application and type in local host:8181
+
+		{The process of this method}
+			The computer is...
+				- taking the data that is sent to the port that is created. (localhost:8181)
+				- forwarding the data through SSH tunnel. (bypassing the firewall)
+				- gets to the destined computer and uses port "3389" to connect to the remote desktop application.
+
+		Demo drawing for visualization
+
+		
+			HOME COMPUTER -----------------------INTERNET---------------------------WORK
+								firewall program   @#%@^@$$%	3389
+
+			____________________________________________________________________________
+			___________________________SSH CONNECTION (SSH TUNNELING)___________________
+			____________________________________________________________________________
+
+
+			HOME	3389 <----- data transmission <--------	SSH tunneling ========= 8181
+
+
+	******'Reversed' Port Forwarding ******
+
+	(DEMO)	in terminal:
+			ssh -R 8181:localhost:3389 pi@192.168.0.135
+	    	   -R		     	8181		    localhost		      3389		  pi	 @	192.168.0.135
+	{remote port forwarding} / {any port number} / {remote destination} / {remote desktop port} / {username and SSH server connection}
+
+	In the home computer -> open remote desktop client -> type in localhost:8181 -> CONNECTED!
+
+		* if this doesn't work, might need to check SSH configuration settings on the home server.
+
+			-> in terminal 			-> type 'sudo vim/vi' or 'sudo nano' 
+			-> go to /etc/ssh/ssh_config 	-> make sure 'GatewayPorts' and 'AllpwTcpForwarding' are both set to yes
+
+		Demo drawing for visualization
+
+		
+			WORK -----------------------INTERNET-------------------------- HOME COMPUTER
+								
+
+			____________________________________________________________________________
+			___________________________SSH CONNECTION (SSH TUNNELING)___________________
+			____________________________________________________________________________
+
+
+			WORK	---------------------type password 
+
+
+	
+	******'Dynamic' Port Forwarding******
+
+	e.g.) Scenario
+	{	When you want to go inside a blocked website at work	}
+	{	but the safety measures of work blocks you because	}
+	{	a web filter on port 80 is installed.			}
+	
+	(DEMO)	in terminal:
+			ssh -D 8181 pi@192.168.0.135
+		-D		     8181		pi     @	192.168.0.135
+	{dynamic entering} / {custom port number} / {username and home SSH server credentials}
+
+	------------------> creates a socks proxy.			
+								*** search and check what a socks proxy is...
+
+	* in Chrome -> go to settings -> search proxy -> LAN setting -> check use a proxy server
+		-> in advanced: Socks option: -> type "localhost:8181" or "localhost" / "custom host number at choice"
+
+	-> web address typed into Chrome 	-> to the custom port through the SSH tunnel
+	-> retrieved on the home computer	-> using the computer itself to do whatever.
+	
+
