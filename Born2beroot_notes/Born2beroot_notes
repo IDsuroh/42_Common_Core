@@ -204,6 +204,14 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 
 ------------------------------------------------------------*** SSH ***--------------------------------------------------------------
 
+***************************************************************
+************ WHAT IS A 'SHELL' IN COMPUTER SCIENCE? ***********
+***************************************************************
+{'Shell' is a computer program that presents a command line interface which allows you to control your computer using commands entered with a
+	keyboard instead of controlling graphical user interfaces (GUIs) with a mouse/keyboard combination. Basically it is your interface to the
+	operating system and the outermost layer of the operating system. It incorporates a programming language to control processes and files
+	as well as to start and control other programs.												}
+
 	WHAT IS SSH?
 	- stands for secure shell.
 	- creating a shell on another machine remotely over the internet or local area connection or some network connection.
