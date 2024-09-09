@@ -183,7 +183,7 @@ Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
 	
 	WHAT IS A MOUNT POINT?
 	- directory on a file system that is logically linked to another file system.
-	- used to make the adata on a different physical sotrage drive easily available in a folder structure.
+	- utilized to make the data on a different physical storage drive available, in a folder structure.
 	- Mount points are fundamental to Unix, Linux, and MacOS.
 	
 	Process:
