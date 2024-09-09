@@ -1,8 +1,57 @@
-reference:
 
-https://www.cloudflare.com/learning/access-management/what-is-ssh/
+------------------------------------------------------------*** SSH ***--------------------------------------------------------------
 
-_______________________________________________________________________________________________________________________________________________________________________
+***************************************************************
+************ WHAT IS A 'SHELL' IN COMPUTER SCIENCE? ***********
+***************************************************************
+{'Shell' is a computer program that presents a command line interface which allows you to control your computer using commands entered with a
+	keyboard instead of controlling graphical user interfaces (GUIs) with a mouse/keyboard combination. Basically it is your interface to the
+	operating system and the outermost layer of the operating system. It incorporates a programming language to control processes and files
+	as well as to start and control other programs.												}
+
+	WHAT IS SSH?
+	- stands for secure shell.
+	- creating a shell on another machine remotely over the internet or local area connection or some network connection.
+	- opens a series of channels that allows to multiplex or have multiple connections over the data.
+	- can use SSH for things other than secure shell.
+	e.g.
+		can send files
+		remotely edit files using 'SFTP'
+		tunnel 'http' traffic and use like a 'VPN'
+	
+	How an SSH packet looks like:
+				__________________
+				| 	         |	 {\Shows the length of the packet. Doesn't
+				| Packet length  |	 include the packet length segment. 4 bytes in
+				|________________|	 size./}
+				|	         |	 {\Shows length of the padding data. 1 byte in
+				| Padding length |	 size. Padding length is mixed in with Payload
+				|________________|	 before it is encrypted./} 
+				|	         |	 { \\\Main data of send. Pieces of a file.///
+				|    Payload     |	 Padding length + Payload + Padding data
+				|________________|			\All encrypted./	   }
+				|	         | 
+				|  Padding data  |
+				|________________|
+				|_______MAC______|	 { Message Authentication Code.	   }
+
+	*Packet length and MAC are not encrypted.
+	
+	Packet length:
+		- because TCP is going to use the packet length to identify how big the packet is.
+		- TCP is going to handle the flow of the data from one point to another.
+		
+	MAC (Message authentication code):
+		- necessary to verify that the Payload is not corrupted.
+		- the 'hash' of the Payload.
+	
+	FUN FACT!
+{	Before SSH, there were other protocls to handle the remote connection like telnet. It would send everything into plain text.
+Developed 1969. But by 1995, when SSH was created, encrypted connections started to be necessary and anybody could hack or be sniffing
+traffic on any network between people. It started to be dangerous since hackers would capture the connection packets to get personal
+login credentials, details, and so on and so forth.											}
+
+
 
 ***How does SSH work?***
 
@@ -85,3 +134,10 @@ ________________________________________________________________________________
 		- Linux and Mac operating systems come with SSH built in. 
 		- Windows machines may need to have an SSH client application installed.
 		- On Mac and Linux computers, users can open the Terminal application and directly enter SSH commands.
+
+
+_______________________________________________________________________________________________________________________________________________________________________
+reference:
+
+https://www.cloudflare.com/learning/access-management/what-is-ssh/
+_______________________________________________________________________________________________________________________________________________________________________
