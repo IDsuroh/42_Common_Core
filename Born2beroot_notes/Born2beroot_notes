@@ -37,16 +37,16 @@ LVM (Logical Volume Manager)
 	- LVM is flexible for resizing of volumes.
 	- allows SNAPSHOTS or copies of your logical volume
 	
-	EXAMPLE LAYOUT OF AN LVM GROUP
-	
-file system - directory where the file systems or logical volumes are mounted too.
------------ [/]	      [/var]   [swap]    [/home]
-Top ---- LV [lv_root] [lv_var] [lv_swap] [lv_home]
-	Logical Volume - individual compoments that are partitions.
-Above -- VG [vg_base]
-	Volume Group - encompasses all physical volumes.
-Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]
-	Physical Volume - actual discs on the system.
+	EXAMPLE LAYOUT OF AN LVM GROUP							^	^	read from bottom to top
+											^	^
+file system - directory where the file systems or logical volumes are mounted too.	^	^
+----------- [/]	      [/var]   [swap]    [/home]					^	^
+Top ---- LV [lv_root] [lv_var] [lv_swap] [lv_home]					^	^
+	Logical Volume - individual compoments that are partitions.			^	^
+Above -- VG [vg_base]									^	^
+	Volume Group - encompasses all physical volumes.				^	^
+Bottom - PV [/dev/sda] [/dev/sdb] [/dev/sdc]						^	^
+	Physical Volume - actual discs on the system.					^	^
 	
 	- Volume Group contains all the Physical Volumes
 	- Logical Volumes are Volume Group carved up into smaller portions that are used for specific functions.
