@@ -1,0 +1,25 @@
+
+***BASE CONCEPT***
+
+	Virtual Machine - virtualization concept that allows different OS to run in the same hardware.
+
+	Hypervisor - technology that allows virtualization to be possible. Allows multiple virtual computers to be hosted into just one computer.
+
+	e.g. VirtualBox by Oracle
+
+	- Creates virtual CPU, RAM, Storage
+	- Hardware resources are shared
+	- Completely isolated
+
+	Type 2 & Type 1 Hypervisor
+
+	Type 1 = Bare Metal Hypervisor
+	Big servers
+	- Hypervisor is installed directly on the Hardware.
+	- Controls the Hardware resources directly.
+		e.g. vmware. Microsoft Hyper-v
+	- For Servers.
+	- Big Companies and Big Cloud Platforms utilize this hypervisor.
+	- Efficient usage of hardware resources.
+	- Abstraction of the Operating System from the hardware.
+	- Can have backups or SNAPSHOTS of the 'Virtual Machine Image' (VMI).
