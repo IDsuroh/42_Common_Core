@@ -1,6 +1,27 @@
 
 ---------------------------------------***Linux Filesystem - How each Directory is used***-------------------------------------------
+
+	In Linux, everything is a file.
+	- network settings
+	- device, hard drives
+	- commands used
 	
+
+	COMMANDS:
+	
+		whoami - shows who the user is
+
+		ls - lists items of current directory
+
+		cd - change current directory to the following directory
+			cd .. - take us to the previous directory
+
+		pwd - shows where you are
+	
+		clear - clears your terminal
+
+	/ - root directory
+
 	ls /
 	
 	/bin
