@@ -1,0 +1,102 @@
+********************************* Computer Memory *************************************
+
+Everything in a computer's memory takes the form of basic units called...
+
+	bits || binary digits
+
+		- each bit us stored in a memory cell, which can switch between 2 states for 2 possible values.
+		- those are ...
+				   
+					0000000000		 //       1111
+			   	    00000        00000		//      111111	
+			  	   00000          00000	       //  	  1111					
+			 	   00000          00000	      //	  1111
+			  	    00000        00000	     // 	  1111
+			  	  	0000000000	    //	        11111111
+
+				0s and 1s.
+
+		- file and programs consist of millions of these bits that are all process in the ventral provessing unit, or CPU
+			- CPU acts as the computer's brain.
+		- computers have short-term memory for immediate tasks.
+		- also long-term memory storage.
+
+	When a program is run...
+		- the operating system allocates area within the short-term memory for performing those instructions. 
+			e.g.) when a key is pressed in a word processor,
+					- the CPU will access one of those locations to retrieve bits of data.
+					- it could also modify them, and create new ones.
+					- the time it takes for this is called 
+										"memory latency".
+					- because program instructinos must be processed quickly and continuously,
+						all locations within the short-term memory can be accessed in any order.
+						- this is called,
+									" RAM - Random Access Memory "
+								most common type of RAM is "DRAM - Dynamic Random Access Memory"
+
+									- each memory cell consists of a transistor and a capacitor that store electrical charges.
+
+			0000000000					  1111
+	   	    00000        00000					111111	
+	  	   00000          00000	      	when there is 		  1111		when there is
+	 	   00000          00000	     no electric charge		  1111	       electric charge
+	  	    00000        00000	   				  1111
+	  	  	0000000000	    				11111111
+
+
+{			Such is called 'Dynamic' because it only holds charges briefly before they leak requiring periodic recharging to retain data.		}
+
+BUT!
+	the latency of 100 nanoseconds is still slow.
+
+	To help this,
+		- there is a small high-speed internal memory cache made from "SRAM - Static Ramdom Access Memory".
+			- SRAM is usually made up of 6 interlocked transistors which does not need refreshing.
+			- it is the fasted memory in a computer system as well.
+			- also the most expensive part of the computer.
+			- and takes up 3 times more space than DRAM.
+
+BUT!
+
+	RAM and cache can only hold data as long as they are powered.
+	Which means when power is shut down, the data must be transferred into a long-term storage device.
+
+	
+
+Long-term Storage Device
+
+	
+	Part 1 - Magnetic Storage
+
+		- data is stored as a magnetic pattern on a spinning disc coated with magnetic film.
+		- because the disc must rotate to where the data is located in order to be read,
+		- the latency of such drives is 100,000 times slower than that of DRAM.
+
+	
+	Part 2 - Optical-based Storage
+
+		- like DVD, Blu-ray.
+		- also uses spinning discs.
+		- but with a reflective coating.
+		- bits are encoded as light and dark spots using a dye that can be read by a laser.
+		- even cheaper and is removable.
+		- for that, they have even slower latencies than magnetic storage and lower capacity.
+
+
+	Part 3 - Solid-state Drives
+
+		- newest and fastest type of long-term storage.
+		- like flash sticks, SSDs.
+		- use floating gate transistors and have no moving parts.
+		- it store bits by trapping or removing electrical charges within the internal structures.
+
+
+Computer Memory is degradable.
+	- the heat(from the device and/or environment) will demagnetize hard drives.
+	- degrade the dye from Optical Media. (CD)
+	- cause charge leakage in floating gates.
+	- Solid-state Drives will corrode eventually due to the repetition of writing to the floating gate transistors.
+
+
+
+
