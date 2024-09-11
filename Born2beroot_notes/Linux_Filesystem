@@ -1,11 +1,12 @@
 
 ---------------------------------------***Linux Filesystem - How each Directory is used***-------------------------------------------
 
+Key point to understand how LINUX works:
+
 	In Linux, everything is a file.
 	- network settings
 	- device, hard drives
 	- commands used
-	
 
 	COMMANDS:
 	
@@ -56,27 +57,30 @@
 	- shared between all users and read only except via root or sudo command.
 	- also contains bin and sbin.
 		- contains /local directory for personalized commands.
-
-	/boot
-	- directory which contains the files needed by the bootloader.
-	- initial ram file system included as well as the kernel.
-	
-	/dev
-	- contains the device files.
-	- dynamically created based on the various physical and virtual devices that are connected to the system.
-	- shows what connected to the system.
-	
-	/etc
-	- contains critical configuration files and startup scripts.
-	- use a lot to configure and edit SSH keys
-	e.g. \\\ sudo vim /etc/ssh/sshd_config \\\
 	
 	/home
 	- location of the individual user home directories.
 	- my documents directory in Windows.
 	- in linux, the directory at start is the personal home directory.
 	- contains configuration files specific to the user.
+
+	/dev
+	- contains the device files.
+	- dynamically created based on the various physical and virtual devices that are connected to the system.
+	- shows what connected to the system.
+		- vda, vda1, ... means virtual disks.
+		- sda, sda1, ... can be displayed like this as well.
+			- these are hard drives, which are also files.
+		
+	/boot
+	- directory which contains the files needed by the bootloader.
+	- initial ram file system included as well as the kernel.
 	
+	/etc
+	- contains critical configuration files and startup scripts.
+	- use a lot to configure and edit SSH keys
+	e.g. \\\ sudo vim /etc/ssh/sshd_config \\\
+
 	/lib
 	- hold the shared libraries the system's programs will need.
 	- enable multiple programs to share code with each other.
@@ -90,11 +94,13 @@
 	/media
 	- mount point for file systems stored on a removable media.
 	- usb drives show here.
+	- usually when drives are automatically mounted to the linux device.
 	
 	/mnt
 	- where devices will be mounted temporarily.
 	- to attach a network storage server for archive.
-	
+	- when drives are manually mounted to the linux device.
+
 	/opt
 	- is rarely used.
 	- optional software packages are placed by a vendor.
