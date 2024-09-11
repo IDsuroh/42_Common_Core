@@ -124,7 +124,7 @@ ________________________________________________________________________________
 		to connect to the first server.				      |			admin -----can connect----> (second server)
 									      |			admin use SSH PORT FORWARDING------------> connect to (first server)
 		From the first server's perspective, the administrator's      |
-		data packets are coming from inside the private network.      |		 ( private network ------(admin's data packet)------) ---> (server)
+		data packets are coming from inside the private network.      |		 ( private network ------(admin's data packet)------ ) ---> (server)
 									      |	reality: 
 									      |	( private network ------( second server ------(admin's data packet)------) )
 									      | -----------SSH PORT FORWARDING----------> (first server)
