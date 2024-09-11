@@ -23,3 +23,5 @@
 	- Efficient usage of hardware resources.
 	- Abstraction of the Operating System from the hardware.
 	- Can have backups or SNAPSHOTS of the 'Virtual Machine Image' (VMI).
+
+
