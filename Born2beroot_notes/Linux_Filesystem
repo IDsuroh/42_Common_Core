@@ -20,11 +20,20 @@
 	
 		clear - clears your terminal
 
+		cat - concatenate (shows text of the file)
+
+		cp - copy
+			e.g.) cp ls -whatever command-
+
+		sudo - getting access
+
+		rm - remove
+
 	/ - root directory
 
 	ls /
 	
-	/bin
+	/bin ------------ binary
 	- directory which contains important executable programs and core operating system commands.
 	- symbolically linked to /usr/bin
 	
