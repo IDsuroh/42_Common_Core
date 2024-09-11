@@ -37,6 +37,12 @@
 	- directory which contains important executable programs and core operating system commands.
 	- symbolically linked to /usr/bin
 	
+	/sbin
+	- contains system essential files.
+	- similar to the bin directory.
+	- little practical difference between bin.
+	- symbolically linked to /usr/sbin.
+	
 	/boot
 	- directory which contains the files needed by the bootloader.
 	- initial ram file system included as well as the kernel.
@@ -95,12 +101,6 @@
 	/run
 	- contains information describing the system since boot time.
 	- log in info, or deamon info.
-	
-	/sbin
-	- contains system essential files.
-	- similar to the bin directory.
-	- little practical difference between bin.
-	- symbolically linked to /usr/sbin.
 	
 	/srv
 	- occasionally used as a folder for files served by a web server or other server mechanisms.
