@@ -122,7 +122,7 @@ ________________________________________________________________________________
 		The administrator could instead connect to a second server    |		( private network -----(second server)------ ) 
 		within the network and then use	SSH 'PORT FORWARDING' 	      |					one that is open to receiving Internet traffic 
 		to connect to the first server.				      |			admin -----can connect----> (second server)
-									      |			admin use SSH PORT FORWARDING------------> connect to (first server_
+									      |			admin use SSH PORT FORWARDING------------> connect to (first server)
 		From the first server's perspective, the administrator's      |
 		data packets are coming from inside the private network.      |		 ( private network ------(admin's data packet)------) ---> (server)
 									      |	reality: 
