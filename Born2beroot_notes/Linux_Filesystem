@@ -29,6 +29,10 @@
 
 		rm - remove
 
+		which - shows which command is in which directory
+
+
+
 	/ - root directory
 
 	ls /
@@ -42,7 +46,17 @@
 	- similar to the bin directory.
 	- little practical difference between bin.
 	- symbolically linked to /usr/sbin.
-	
+	- has special commands only administrators can use. 	e.g.) adduser
+		
+	/usr
+	- contains most of the programs and utilities the system will be running.
+	- not the same with user directory.
+	- place most of the programs actualy reside.
+	- where the bulk of the programs are located.
+	- shared between all users and read only except via root or sudo command.
+	- also contains bin and sbin.
+		- contains /local directory for personalized commands.
+
 	/boot
 	- directory which contains the files needed by the bootloader.
 	- initial ram file system included as well as the kernel.
@@ -112,14 +126,7 @@
 	
 	/tmp
 	- for temporary files
-	
-	/usr
-	- contains most of the programs and utilities the system will be running.
-	- not the same with user directory.
-	- place most of the programs actualy reside.
-	- where the bulk of the programs are located.
-	- shared between all users and read only except via root or sudo command.
-	
+
 	/var
 	- system specific variable files.
 	- logs, temporary message files, spool files.
