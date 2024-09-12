@@ -1,8 +1,8 @@
 
 	
-___________________________________*** AWK ***_________________________________________
+(___________________________________)*** AWK ***(_________________________________________)
 
-	AWK is a command line utility and it's a text processed utility which means when given a text, it can grab certain columns, rows, or fields from that text.
+	((AWK)) is a command line utility and it's a text processed utility which means when given a text, it can grab certain columns, rows, or fields from that text.
 	
 -------------------------------------------------------!!!How awk is used!!!---------------------------------------------------------
 	
