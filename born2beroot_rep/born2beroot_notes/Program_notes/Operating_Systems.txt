@@ -1,8 +1,43 @@
 ********************Different OSs*********************
 
-Debian
+Debian - is a Linux distribution composed of free and open-source software
+            and optionally non-free firmware or software developed by the
+            community-supported Debian Project, which was established by
+            Ian Murdock on August 16, 1993.
+
+Rocky - Rocky Linux is an open-source enterprise operating system designed
+            to be 100% bug-for-bug compatible with Red Hat Enterprise Linux®.
+
+{Debian Linux has a long-standing reputation for its robustness, stability,
+    and massive software repositories, making it a versatile option for
+    various server applications. On the other hand, Rocky OS could be a
+    more suitable choice with its substantial similarity to
+    ***Red Hat Enterprise Linux (RHEL) and superior support for
+    Security-Enhanced Linux (SELinux).
+
+    *** Red Hat Enterprise Linux (RHEL) is an enterprise Linux operating
+            system (OS) developed by Red Hat for the business market.
+            RHEL, formerly known as Red Hat Linux Advanced Server,
+            is certified with thousands of vendors and across hundreds
+            of clouds.
+
+Pros of Rocky Linux:
+    
+    Compatibility: Transitioning from Rocky OS to RHEL is relatively seamless.
+                        The similarity between the two systems means your
+                        team will not have to learn a new system from scratch,
+                        as the commands, software management, and system
+                        configuration will be familiar.
+    
+    Cost-effectiveness: being free and open-source, Rocky OS offers an economical
+                        way to familiarize yourself with an RHEL-like environment
+                        without the upfront costs associated with RHEL.
+
+    While Debian and Rocky OS both support SELinux, Rocky OS integrates it more closely, echoing the strong SELinux policies of RHEL.
 
 'aptitude' or 'apt'?
+
+Both are package managing tools
 
 apt: Advanced Packaging Tool
 
@@ -35,8 +70,13 @@ apt: Advanced Packaging Tool
             updates.
 
 
-aptitude: is broader and includes functions such as apt-get, apt-cache, and
-            so on.
+aptitude
+        : Aptitude is vaster in functionality than apt-get and integrates
+            functionalities of apt-get and its other variants including
+            apt-mark and apt-cache.
+        : While apt-get lacks UI, Aptitude has a text-only and interactive UI.
+        : also run-able on text-based UI modes and on
+            non-interactive command line modes. 
 
 - if apt-get does things like...
     - installing packages.
@@ -47,5 +87,15 @@ aptitude: is broader and includes functions such as apt-get, apt-cache, and
 - aptitude can do lot more things like...
     - toggling package or package list installation to automatic or manual.
     - saving packages that cannot be used to the upgrade.
-
-
+    
+- Aptitude has a better package management than apt-get
+    - Aptitude will automatically remove unused packages, while apt-get
+        would need user to explicitly specify this by either adding
+        additional option of ‘—auto-remove’ or specifying ‘apt-get
+        autoremove"
+    - To investigate further as to why certain action is getting blocked
+        or why or why-not a certain action should be taken, Aptitude
+        offers 'why' and ‘why-not’ commands.
+    - While apt-get would probably die-out in case of conflicting action
+        regarding installation or removal of package with a message,
+        Aptitude can suggest possible measures to remove that conflict.
