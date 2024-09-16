@@ -1,0 +1,75 @@
+***************************************SED COMMAND***************************************
+
+SED - String Editor
+
+	- allows filering and editing text.
+	- allows searching for strings of text to switch
+
+EXAMPLE COMMANDS)
+
+sed 's/find/replace/' <oldfile >newfile
+s = search/ find = the word to find/replace = word to replace
+- searches every line till the first instance it finds the word 'find'.
+- input is from <oldfile ('<' means from; take it from)
+- output is to >newfile ('<' means to; take it to)
+
+usage:		sed 's/o/O/' <.Xresources >sed-test
+			- first 'o' in every line becomes 'O'.
+
+		sed 's/o/O/g' <.Xresources >sed-test
+			- g means global substitution.
+			- every single 'o' becomes 'O'.
+
+		echo "Derek" | sed 's/Derek/DT/'
+			- output would be 'DT'
+			- it is not searching words, but more specifically 'STRINGS'
+
+		sed -i 's/find/replace/g' filename 
+			- would print the output to the same file of the input.
+
+***tldr sed <- a short cut of the man page.
+
+		tldr sed | sed 'Replace/s/the/THE/'
+			- replaces the string 'the' to 'THE' in the tldr sed.
+
+		tldr sed | sed '/line_pattern/d'
+			- deletes the line that contains the string 'line_pattern'.
+
+		sed -e 'command' -e 'command'
+			- can use mulitple commands with the '-e' flag.
+
+***can use other symbols as long as that symbol do note interfere with the search pattern.
+
+	sed 's#bin#b#g' will still work.
+		* '#' is the most common seperator for 'sed'.
+
+		sed -n '/usr/p'
+			- print lines that involves the string 'usr'.
+
+***sed is very useful for deleting unnecessary spaces/tabs in files.
+
+	sed -i 's# *$##' test.sh
+		* substitution, then search every instance where ' ' is true.
+		* then replace ' ' to '' (nothing).
+
+	sed -i 's#[[:space:]]*$##' test.sh
+		* substitution; '[[:space:]]' means tab.
+
+	sed '#^$#d'
+		* '^' means beginning of the line.
+		* '$' means end of the line.
+		* 'd' means delete.
+
+		sed 's/[a-z]/\U&/g' filename
+			- 's' for substitution.
+			- '[a-z]' means to find every lowercase from 'a' to 'z'.
+			- '\U&' means to make them uppercase.
+
+		sed 's/[A-Z]/\L&/g' filename
+			- now to lower case.
+
+***typically, 'sed' command is used to change stuff in the header.
+
+	sed 11q .bashrc
+		* shows the first 11 lines of the file.
+
