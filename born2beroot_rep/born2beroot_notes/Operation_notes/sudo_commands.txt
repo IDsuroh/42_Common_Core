@@ -15,6 +15,4 @@ passwd_tries        number  Number of tries to enter a password.
 
 ***tty? the tty device is a tool to show text output.
 
-for more command options, check [this] url.
-
-(https://support.oneidentity.com/technical-documents/safeguard-for-sudo/7.2.2/administration-guide/61)
+for more command options, check [this](https://support.oneidentity.com/technical-documents/safeguard-for-sudo/7.2.2/administration-guide/61) url.
