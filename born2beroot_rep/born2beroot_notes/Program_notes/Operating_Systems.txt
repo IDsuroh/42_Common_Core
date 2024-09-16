@@ -1,0 +1,51 @@
+********************Different OSs*********************
+
+Debian
+
+'aptitude' or 'apt'?
+
+apt: Advanced Packaging Tool
+
+- Packaging Tool that manages the instalation and uninstalation of a software.
+- was made to manage '.deb' packages
+- compatible with 'rpm' package manager now.
+    
+    ****RPM Package Manager (RPM), originally called the Red Hat Package Manager,
+        is an open source program for installing, uninstalling and managing
+        software packages in Linux.
+
+- 'apt' uses command lines without graphic interface.
+- when installing and typing the package name,
+- it installs the package and the dependencies to 
+            '/etc/apt/sources.list' automatically.
+        
+        ***What are dependencies?
+            In Linux, dependencies are libraries, packages, or modules
+            installed in order to run a program smoothly. Sometimes, when we
+            install a package, its dependencies are not installed
+            automatically or may be missing. So, as a Linux administrator,
+            knowing how to install these dependencies is essential.
+
+        ***
+            With 'apt', there is no need to worry about dependencies and it is
+            very flexible since it is possible to do certain things like...
+        ->
+            maintaining the current package withoutbeing updated even though
+            the user adds a new source list manually or when the system
+            updates.
+
+
+aptitude: is broader and includes functions such as apt-get, apt-cache, and
+            so on.
+
+- if apt-get does things like...
+    - installing packages.
+    - upgrading packages.
+    - system upgrade.
+    - dependency check.
+
+- aptitude can do lot more things like...
+    - toggling package or package list installation to automatic or manual.
+    - saving packages that cannot be used to the upgrade.
+
+
