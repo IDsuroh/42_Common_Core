@@ -1,0 +1,16 @@
+Supported Sudoers directives
+
+Sudo Plugin supports the following sudo command options :
+||||||
+||||||
+important for this project:
+
+authfail_message    string  Authentication failure message.
+badpass_message     string  Incorrect password message.
+requiretty          flag    Only allow the user to run sudo if they have a tty.
+log_input           flag    Log user's input for the command being run.
+log_output          flag    Log the output of the command being run.
+iolog_dir           string  Directory in which to store input/output logs.
+passwd_tries        number  Number of tries to enter a password.
+
+***tty? the tty device is a tool to show text output, 
