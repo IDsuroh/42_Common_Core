@@ -1,0 +1,31 @@
+*****************************************Security**********************************************
+
+***MAC - Mandatory Access Control
+			- a security strategy that restricts the ability individual resource owners have to grant or
+				deny access to resource objects in a file system.
+			- 'MAC' criteria are defined by the system administrator, strictly enforced by the operating
+				system (OS) or security kernel, and cannot be altered by end users.
+			- a policy-based framework that establishes and enforces rules for users and processes
+				when it comes to accessing files, directories, ports, and other resources.
+			
+
+SELinux - Security Enhanced Linux
+		- a security module that applies 'MAC' to Linux operating systems.
+		- makes use of 'labels' to implement a security context for different processes and resources.
+		- Once an access request is made, SELinux compares these labels to a list of policies to
+			decide whether to grant or deny that particular request.
+
+			!Basically! - a security architecture for Linux Systems which
+			enables the admin to manage system access management efficiently
+
+AppArmor - Application Armor
+		 - a security module that applies 'MAC' to Linux operating systems.
+		 - utilizes 'profiles' to create and enforce rules on processes and resources.
+
+			***'Profiles' are files that define the set of restrictions and permissions for processes
+				and applications that try to access files, directories, ports, and other resources.
+				Using these 'profiles', AppArmor can limit the privileges of different applications and
+				processes to prevent unauthorized access to the resources of a device.
+		
+			!Basically! - a Linux Kernel System Module which
+			enables the system manager to limit accessibility by program profile to program profile.
