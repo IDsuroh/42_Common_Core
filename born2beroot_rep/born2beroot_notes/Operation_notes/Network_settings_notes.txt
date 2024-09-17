@@ -1,0 +1,28 @@
+Network Settings (Bridged Adapter)
+
+    If your VM's network adapter is set to Bridged Adapter,
+    this means that the VM should act like it's directly
+	connected to the network, with its own IP address separate
+	from the host machine.
+
+    You should check the IP address of the VM:
+
+    hostname -I
+
+    Use the output of this IP address instead of 127.0.1.1.
+	The IP address 127.0.1.1 is a loopback address used by the
+	host machine, and it might not be the correct one for the VM.
+
+Test the Correct IP Address
+
+    After confirming the correct IP address of your VM, try
+	connecting using that address:
+
+		ssh suroh@<VM_IP_Address> -p 4242
+
+
+but when the settings are in NAT
+
+its a little different.
+
+
