@@ -1,0 +1,27 @@
+UFW (Uncomplicated Firewall) is a user-friendly command-line interface
+for managing a firewall on Linux systems, particularly those based on
+Debian/Ubuntu. It simplifies the process of setting up firewall rules,
+making it easier to allow or block traffic to specific services, ports,
+or IP addresses without having to deal with the complexity of more
+advanced firewall tools like iptables.
+
+to install UFW:
+        apt-get install ufw
+
+to enable UFW
+        sudo ufw enable
+
+to check the status of UFW:
+        sudo ufw status numbered 
+
+to configure the Rules:
+        sudo ufw allow ssh
+
+to configure the Port Rules:
+        sudo ufw allow 4242
+
+to check the status of UFW 4242 Port:
+        sudo ufw status numbered
+
+
+

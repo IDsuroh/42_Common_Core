@@ -1,0 +1,47 @@
+to log in as root user:
+        su -
+
+to update and upgrade packaging tool:
+        apt-get update -y
+        apt-get upgrade -y
+
+        *-y is a flag that automatically answers "yes" to any prompts
+    
+to install sudo:
+        apt install sudo
+
+to add user in the sudo group:
+        usermod -aG sudo username
+
+        *-a (append) = user is added to the specified group without
+            removing them from any other groups they are part of.
+        *-G (Group) = the group being targeted, which grants administrative
+            privileges. 
+
+to check if user is in sudo group:
+        getent group sudo
+
+to open sudoers file:
+        sudo visudo
+
+       username    ALL=(ALL) ALL
+
+        *username: Replace this with the actual username you want to
+            grant privileges to. This is the user for whom the privileges are
+            being defined.
+        *ALL: The first ALL refers to the hosts where this rule applies.
+            Typically, it means the rule applies to all hosts, which is
+            common in single-machine setups.
+        *(ALL): The second ALL inside the parentheses specifies the target
+            user for the command. In this case, it allows the user to run
+            commands as any user, including the root user.
+        *ALL: The last ALL means the user can run all commands with sudo
+            privileges.
+
+installing Git and Vim
+
+to install Git:
+        apt-get install git -y
+    
+to get Git Version:
+        git --version = to check the Git Version

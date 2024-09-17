@@ -1,0 +1,25 @@
+Installing and Configuring SSH (Secure Shell Host)
+
+to install package (openssh server): <- a software needed to set up an SSH
+        sudo apt install openssh-server
+
+to check SSH Server Status:
+        sudo systemctl status ssh
+
+        sudo vim /etc/ssh/sshd_config
+
+Find line:
+        #Port22
+    
+Change to:
+        Port 4242 without the # (Hash) in front of it
+
+Save and Exit Vim
+
+to check if the port settings are right:
+        sudo grep Port /etc/ssh/sshd_config
+
+to restart the SSH Service
+        sudo service ssh restart
+         ""  systemd    ""
+
