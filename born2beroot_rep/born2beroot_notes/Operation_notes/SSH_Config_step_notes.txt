@@ -18,6 +18,24 @@ Save and Exit Vim
 
 to check if the port settings are right:
         sudo grep Port /etc/ssh/sshd_config
+sudo: Runs the command with superuser (root) privileges
+        because reading or modifying system files like
+        /etc/ssh/sshd_config usually requires administrative
+        access.
+
+grep: A command-line tool used to search for patterns or
+        specific text within files. In this case, it's
+        searching for the word "Port."
+
+Port: The search term. It is commonly used in the SSH
+        configuration to specify the port number on
+        which the SSH service listens.
+
+/etc/ssh/sshd_config: This is the configuration file
+        for the SSH server (sshd), which controls settings
+        like the port number, allowed authentication
+        methods, and security options.
+
 
 to restart the SSH Service
         sudo service ssh restart
