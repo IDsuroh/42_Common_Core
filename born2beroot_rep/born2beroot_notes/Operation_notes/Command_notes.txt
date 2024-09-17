@@ -1,0 +1,11 @@
+cut -d: -f1 /etc/passwd
+    cut -- "cuts" sections
+
+    -d: -- This option specifies the delimiter to use for splitting the input lines.
+            delimiter -- :
+
+    -f1: This option specifies the field to extract. -f1 means "field 1"
+
+    /etc/passwd: This is the input file from which to read the data. 
+
+
