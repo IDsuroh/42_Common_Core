@@ -45,8 +45,21 @@
 	Also, to get the VM host address, before exiting VM,
 		type:
 			hostname -I
-	and remember the "address". (10.0.2.15) 127.0.1.1
+	and remember the "address".
 
 	Then go to terminal and
 		type:
 			ssh "username"@"address" -p 4242 (-p means port)
+
+7. Setting Password Policy in VM
+	download Password Quality Checking Library
+	In my case, libpam-pwquality
+		type:
+			sudo apt-get install libpam-pwquality
+			sudo vim /etc/pam.d/common-password
+
+	add rules by typing:
+		password  requisite     pam_pwquality.so/pam_deny.so  retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username difok=7
+
+	for the 'root' the rules are different
+		password  requisite     pam_pwquality.so/pam_deny.so  retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root
