@@ -63,3 +63,27 @@
 
 	for the 'root' the rules are different
 		password  requisite     pam_pwquality.so/pam_deny.so  retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root
+
+		sudo vim /etc/login.defs
+			PASS_MAX_DAYS 9999 PASS_MIN_DAYS 0
+			->	PASS_MAX_DAYS 30 PASS_MIN_DAYS 2
+
+		sudo reboot
+
+8. Creating a Group & a User to assign
+	type:
+		sudo groupadd "user"42
+    		sudo groupadd "evaluating"
+    		getent group
+    		cut -d: -f1 /etc/passwd (to check local users)
+    		sudo adduser "new_username"
+		sudo usermod -aG "user"42 "username"
+		sudo usermod -aG "evaluating" "new_username"
+		getent group "user"42 (to check if the user is the group)
+		getent group "evaluating" (to check the group)
+		groups
+		chage -l "new_username" (to check if the password rules are working in users)
+
+
+
+
