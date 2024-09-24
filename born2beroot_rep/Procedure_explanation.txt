@@ -84,6 +84,10 @@
 		groups
 		chage -l "new_username" (to check if the password rules are working in users)
 
+	Then create sudo.log like this; "/var/log/sudo/sudo.log"
+
+9. Configuring "Sudoers Group"
+
 
 
 
