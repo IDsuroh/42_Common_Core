@@ -1,0 +1,52 @@
+1. Download VM
+	type:
+		lsblk (to see the partitions)
+2. Install Sudo
+	type:
+		su -
+		apt-get update -y (-y means yes to all)
+		apt-get upgrade -y
+		apt install sudo
+		usermod -aG sudo "username" (-append Group)
+			getent group sudo
+		sudo visudo
+			add:
+				"username"	ALL=(ALL) ALL
+
+3. Install Git and Vim
+	type:
+		apt-get install git -y
+		apt-get install vim -y
+		git --version
+		vim --version
+
+4. Install & Configure SSH (method of authentication)
+	type:
+		sudo apt install openssh-server
+		sudo systemctl status ssh
+		sudo vim /etc/ssh/sshd_config
+			change:
+				#Port22 -> Port 4242
+		sudo grep Port /etc/ssh/sshd_config
+		sudo service ssh restart
+
+5. Install & Configure UFW
+(Uncomplicated Firewall allows to modify firewall and to configure ports)
+	type:
+		apt-get install ufw
+		sudo ufw enable
+		sudo ufw status numbered
+		sudo ufw allow ssh
+		sudo ufw allow 4242
+		sudo ufw status numbered
+
+6. Connect to SSH
+	In our Campus, NAT doesn't work so change to 'bridged adaptor'.
+	Also, to get the VM host address, before exiting VM,
+		type:
+			hostname -I
+	and remember the "address". (10.0.2.15) 127.0.1.1
+
+	Then go to terminal and
+		type:
+			ssh "username"@"address" -p 4242 (-p means port)
