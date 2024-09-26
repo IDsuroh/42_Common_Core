@@ -13,6 +13,13 @@
 			add:
 				"username"	ALL=(ALL) ALL
 
+	*apt and aptitude
+		- aptitude is a higher level package manager
+		- apt is a lower level PM which can be used
+			by other higher level package managers
+		- aptitude is smarter and can automatically remove unused packages
+		- apt will only do what its told to do
+
 3. Install Git and Vim
 	type:
 		apt-get install git -y
