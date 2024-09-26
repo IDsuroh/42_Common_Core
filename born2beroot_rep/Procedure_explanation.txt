@@ -1,6 +1,13 @@
 1. Download VM
 	type:
 		lsblk (to see the partitions)
+		aa-status (to check AppArmor status)
+
+	*AppArmor
+		- linux security system which provides Mandatory Access Control (MAC)
+		- allows the admin to restrict actions
+		- default with Debian
+
 2. Install Sudo
 	type:
 		su -
@@ -46,6 +53,10 @@
 		sudo ufw allow ssh
 		sudo ufw allow 4242
 		sudo ufw status numbered
+
+	*UFW
+		- an interface to modify the fire wall of the device
+		- can configure ports to allow connections and closing
 
 6. Connect to SSH
 	In our Campus, NAT doesn't work so change to 'bridged adaptor'.
