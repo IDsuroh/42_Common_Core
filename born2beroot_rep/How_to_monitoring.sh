@@ -1,0 +1,151 @@
+#!/bin/bash
+arc=$(uname -a)
+pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l) 
+vcpu=$(grep "^processor" /proc/cpuinfo | wc -l)
+fram=$(free -m | awk '$1 == "Mem:" {print $2}')
+uram=$(free -m | awk '$1 == "Mem:" {print $3}')
+pram=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
+fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}')
+udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
+pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
+cpul=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}')
+lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
+lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
+ctcp=$(ss -Ht state established | wc -l)
+ulog=$(users | wc -w)
+ip=$(hostname -I)
+mac=$(ip link show | grep "ether" | awk '{print $2}')
+cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+wall "	#Architecture: $arc
+	#CPU physical: $pcpu
+	#vCPU: $vcpu
+	#Memory Usage: $uram/${fram}MB ($pram%)
+	#Disk Usage: $udisk/${fdisk}Gb ($pdisk%)
+	#CPU load: $cpul
+	#Last boot: $lb
+	#LVM use: $lvmu
+	#Connections TCP: $ctcp ESTABLISHED
+	#User log: $ulog
+	#Network: IP $ip ($mac)
+	#Sudo: $cmds cmd"
+
+ 1. arc=$(uname -a)
+
+    Command: uname -a
+    Explanation: The uname command outputs system information. The -a flag prints all available system information: kernel name, node name, kernel release, kernel version, machine hardware name, processor type, hardware platform, and operating system.
+    Output: This is stored in the variable arc. It will contain all the details about the system architecture.
+
+2. pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l)
+
+    Command: grep "physical id" /proc/cpuinfo
+        grep: Searches for the string "physical id" in the file /proc/cpuinfo.
+        /proc/cpuinfo: This file contains information about the system’s CPU, such as its cores and architecture.
+        sort | uniq | wc -l:
+            sort: Sorts the output.
+            uniq: Filters out repeated lines, leaving only unique ones.
+            wc -l: Counts the number of lines. This gives the number of physical CPUs.
+
+3. vcpu=$(grep "^processor" /proc/cpuinfo | wc -l)
+
+    Command: grep "^processor" /proc/cpuinfo
+        ^: In regular expressions, the caret ^ matches the beginning of a line.
+        grep "^processor": Searches for lines starting with the word "processor" in the /proc/cpuinfo file, which corresponds to virtual CPUs (vCPUs or logical CPUs).
+        wc -l: Counts how many lines are found, which corresponds to the number of virtual CPUs.
+
+4. fram=$(free -m | awk '$1 == "Mem:" {print $2}')
+
+    Command: free -m
+        free: Displays memory usage statistics.
+        -m: Shows the output in megabytes.
+        awk '$1 == "Mem:" {print $2}': This uses awk to print the total memory size (in MB). The $1 == "Mem:" part filters lines where the first column is "Mem:", and {print $2} prints the second column, which contains the total memory size.
+
+5. uram=$(free -m | awk '$1 == "Mem:" {print $3}')
+
+    Command: Similar to the previous line, but here awk prints the third column ($3), which corresponds to used memory in MB.
+
+6. pram=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
+
+    Command: This calculates the percentage of used memory.
+        $3/$2*100: Divides the used memory ($3) by the total memory ($2) and multiplies it by 100 to get a percentage.
+        printf("%.2f"): Formats the output to two decimal places.
+
+7. fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}')
+
+    Command: df -BG
+        df: Shows disk space usage.
+        -BG: Prints the output in gigabytes.
+        grep '^/dev/': Filters lines that start with /dev/, corresponding to disk partitions.
+        grep -v '/boot$': Excludes any lines ending with /boot (so that the boot partition is not counted).
+        awk '{ft += $2} END {print ft}': Adds the size of each disk partition (the second column $2), and after reading all the lines, it prints the total disk size.
+
+8. udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
+
+    Command: Similar to the previous line, but -BM gives the output in megabytes.
+        $3: Refers to used disk space, so this adds up the used disk space in MB for all partitions except /boot.
+
+9. pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
+
+    Command: This calculates the percentage of disk space used.
+        ut += $3: Adds used disk space.
+        ft += $2: Adds total disk space.
+        ut/ft*100: Calculates the percentage of used disk space and prints the result as an integer (%d).
+
+10. cpul=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}')
+
+    Command: top -bn1
+        top -bn1: Runs the top command in batch mode (-b) for one iteration (-n1).
+        grep '^%Cpu': Filters lines that start with %Cpu, showing the CPU usage statistics.
+        cut -c 9-: Removes the first 8 characters from the output, focusing on the CPU data.
+        xargs: Trims extra spaces.
+        awk '{printf("%.1f%%"), $1 + $3}': Adds the values of the first column (user CPU usage) and the third column (system CPU usage), then formats it to one decimal place.
+
+11. lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
+
+    Command: who -b
+        who -b: Shows the last system boot time.
+        awk '$1 == "system" {print $3 " " $4}': Filters the line where the first column is "system" and prints the third and fourth columns (date and time of the last boot).
+
+12. lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
+
+    Command: This checks if LVM (Logical Volume Manager) is being used.
+        lsblk: Lists information about all block devices.
+        grep "lvm": Filters lines that contain the word "lvm" (Logical Volume Manager).
+        wc -l: Counts the number of lines. If it’s zero, LVM is not in use; otherwise, it is.
+        if [ ... ]: A conditional that checks whether the result is zero. If true, it prints "no", otherwise "yes".
+
+13. ctcp=$(ss -Ht state established | wc -l)
+
+    Command: ss -Ht state established
+        ss -Ht: Shows socket statistics in a human-readable format (-H), without resolving names (-n), for TCP connections (-t).
+        state established: Filters only established connections.
+        wc -l: Counts the number of established TCP connections.
+
+14. ulog=$(users | wc -w)
+
+    Command: users
+        users: Lists the currently logged-in users.
+        wc -w: Counts the number of users (words).
+
+15. ip=$(hostname -I)
+
+    Command: hostname -I
+        hostname -I: Displays the IP address(es) assigned to the system.
+
+16. mac=$(ip link show | grep "ether" | awk '{print $2}')
+
+    Command: ip link show
+        ip link show: Displays information about network interfaces.
+        grep "ether": Filters the lines containing the MAC address (which is shown as "ether").
+        awk '{print $2}': Prints the second column, which contains the MAC address.
+
+17. cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+
+    Command: journalctl _COMM=sudo
+        journalctl _COMM=sudo: Retrieves logs for the sudo command.
+        grep COMMAND: Filters lines containing the word "COMMAND" (these are logs where users have executed commands with sudo).
+        wc -l: Counts how many times sudo has been used.
+
+18. wall " #Architecture: $arc..."
+
+    Command: wall
+        wall: Sends a message to all logged-in users. 
