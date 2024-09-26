@@ -32,41 +32,55 @@ wall "	#Architecture: $arc
  1. arc=$(uname -a)
 
     Command: uname -a
-    Explanation: The uname command outputs system information. The -a flag prints all available system information: kernel name, node name, kernel release, kernel version, machine hardware name, processor type, hardware platform, and operating system.
-    Output: This is stored in the variable arc. It will contain all the details about the system architecture.
+    Explanation: The uname command outputs system information. The -a flag prints
+    	all available system information: kernel name, node name, kernel release,
+    	kernel version, machine hardware name, processor type, hardware platform, and
+    	operating system.
+    Output: This is stored in the variable arc. It will contain all the details
+    	about the system architecture.
 
 2. pcpu=$(grep "physical id" /proc/cpuinfo | sort | uniq | wc -l)
 
     Command: grep "physical id" /proc/cpuinfo
         grep: Searches for the string "physical id" in the file /proc/cpuinfo.
-        /proc/cpuinfo: This file contains information about the system’s CPU, such as its cores and architecture.
+        /proc/cpuinfo: This file contains information about the system’s CPU,
+		such as its cores and architecture.
         sort | uniq | wc -l:
             sort: Sorts the output.
             uniq: Filters out repeated lines, leaving only unique ones.
-            wc -l: Counts the number of lines. This gives the number of physical CPUs.
+            wc -l: Counts the number of lines. This gives the number of physical
+	    	CPUs.
 
 3. vcpu=$(grep "^processor" /proc/cpuinfo | wc -l)
 
     Command: grep "^processor" /proc/cpuinfo
         ^: In regular expressions, the caret ^ matches the beginning of a line.
-        grep "^processor": Searches for lines starting with the word "processor" in the /proc/cpuinfo file, which corresponds to virtual CPUs (vCPUs or logical CPUs).
-        wc -l: Counts how many lines are found, which corresponds to the number of virtual CPUs.
+        grep "^processor": Searches for lines starting with the word "processor"
+		in the /proc/cpuinfo file, which corresponds to virtual CPUs
+  		(vCPUs or logical CPUs).
+        wc -l: Counts how many lines are found, which corresponds to the number
+		of virtual CPUs.
 
 4. fram=$(free -m | awk '$1 == "Mem:" {print $2}')
 
     Command: free -m
         free: Displays memory usage statistics.
         -m: Shows the output in megabytes.
-        awk '$1 == "Mem:" {print $2}': This uses awk to print the total memory size (in MB). The $1 == "Mem:" part filters lines where the first column is "Mem:", and {print $2} prints the second column, which contains the total memory size.
+        awk '$1 == "Mem:" {print $2}': This uses awk to print the total memory
+		size (in MB). The $1 == "Mem:" part filters lines where the first
+  		column is "Mem:", and {print $2} prints the second column, which
+    		contains the total memory size.
 
 5. uram=$(free -m | awk '$1 == "Mem:" {print $3}')
 
-    Command: Similar to the previous line, but here awk prints the third column ($3), which corresponds to used memory in MB.
+    Command: Similar to the previous line, but here awk prints the third column ($3),
+    	which corresponds to used memory in MB.
 
 6. pram=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}')
 
     Command: This calculates the percentage of used memory.
-        $3/$2*100: Divides the used memory ($3) by the total memory ($2) and multiplies it by 100 to get a percentage.
+        $3/$2*100: Divides the used memory ($3) by the total memory ($2) and
+		multiplies it by 100 to get a percentage.
         printf("%.2f"): Formats the output to two decimal places.
 
 7. fdisk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}')
@@ -74,30 +88,47 @@ wall "	#Architecture: $arc
     Command: df -BG
         df: Shows disk space usage.
         -BG: Prints the output in gigabytes.
-        grep '^/dev/': Filters lines that start with /dev/, corresponding to disk partitions.
-        grep -v '/boot$': Excludes any lines ending with /boot (so that the boot partition is not counted).
-        awk '{ft += $2} END {print ft}': Adds the size of each disk partition (the second column $2), and after reading all the lines, it prints the total disk size.
+        grep '^/dev/': Filters lines that start with /dev/, corresponding to
+		disk partitions.
+        grep -v '/boot$': Excludes any lines ending with /boot (so that the boot
+		partition is not counted).
+        awk '{ft += $2} END {print ft}': Adds the size of each disk partition
+		(the second column $2), and after reading all the lines, it prints
+  		the total disk size.
 
 8. udisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}')
 
     Command: Similar to the previous line, but -BM gives the output in megabytes.
-        $3: Refers to used disk space, so this adds up the used disk space in MB for all partitions except /boot.
+        $3: Refers to used disk space, so this adds up the used disk space in MB
+		for all partitions except /boot.
 
-9. pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')
-
+9. pdisk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END
+							{printf("%d"), ut/ft*100}')
     Command: This calculates the percentage of disk space used.
         ut += $3: Adds used disk space.
         ft += $2: Adds total disk space.
-        ut/ft*100: Calculates the percentage of used disk space and prints the result as an integer (%d).
+        ut/ft*100: Calculates the percentage of used disk space and prints
+		the result as an integer (%d).
 
 10. cpul=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}')
 
     Command: top -bn1
-        top -bn1: Runs the top command in batch mode (-b) for one iteration (-n1).
-        grep '^%Cpu': Filters lines that start with %Cpu, showing the CPU usage statistics.
-        cut -c 9-: Removes the first 8 characters from the output, focusing on the CPU data.
+        top -bn1: Runs the top command in *batch mode (-b) for one iteration (-n1).
+        grep '^%Cpu': Filters lines that start with %Cpu, showing the CPU
+		usage statistics.
+        cut -c 9-: Removes the first 8 characters from the output, focusing on
+		the CPU data.
         xargs: Trims extra spaces.
-        awk '{printf("%.1f%%"), $1 + $3}': Adds the values of the first column (user CPU usage) and the third column (system CPU usage), then formats it to one decimal place.
+        awk '{printf("%.1f%%"), $1 + $3}': Adds the values of the first column
+		(user CPU usage) and the third column (system CPU usage), then
+  		formats it to one decimal place.
+
+    	*'top' is an interactive command that shows real-time system performance
+     	information, such as CPU and memory usage, and typically updates the 
+      	display every few seconds.
+	In 'batch mode' (top -b), 'top' runs non-interactively and outputs the
+ 	system stats once or for a specified number of iterations, useful for
+  	logging or scripting purposes.
 
 11. lb=$(who -b | awk '$1 == "system" {print $3 " " $4}')
 
