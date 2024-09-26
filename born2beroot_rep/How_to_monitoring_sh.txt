@@ -134,7 +134,9 @@ wall "	#Architecture: $arc
 
     Command: who -b
         who -b: Shows the last system boot time.
-        awk '$1 == "system" {print $3 " " $4}': Filters the line where the first column is "system" and prints the third and fourth columns (date and time of the last boot).
+        awk '$1 == "system" {print $3 " " $4}': Filters the line where the
+		first column is "system" and prints the third and fourth columns
+		(date and time of the last boot).
 
 12. lvmu=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo no; else echo yes; fi)
 
@@ -142,20 +144,39 @@ wall "	#Architecture: $arc
         lsblk: Lists information about all block devices.
         grep "lvm": Filters lines that contain the word "lvm" (Logical Volume Manager).
         wc -l: Counts the number of lines. If it’s zero, LVM is not in use; otherwise, it is.
-        if [ ... ]: A conditional that checks whether the result is zero. If true, it prints "no", otherwise "yes".
+        if [ ... ]: A conditional that checks whether the result is zero. If true, it prints "no",
+		otherwise "yes".
 
 13. ctcp=$(ss -Ht state established | wc -l)
 
     Command: ss -Ht state established
-        ss -Ht: Shows socket statistics in a human-readable format (-H), without resolving names (-n), for TCP connections (-t).
-        state established: Filters only established connections.
-        wc -l: Counts the number of established TCP connections.
+        ss: A utility to investigate network socket connections. It replaces older tools like
+		netstat and provides more detailed information.
+        -H: This option hides the column headers, making the output easier to parse in scripts.
+        -t: Limits the output to TCP connections. By default, ss can show information about
+		various protocols, but this focuses only on TCP connections.
+        state established: Filters the output to only show TCP connections that are in the
+		"established" state, meaning a full connection has been made, and data is
+		being transferred.
+    wc -l:
+        wc: The "word count" command is typically used to count words, characters, or lines.
+        -l: This flag tells wc to count lines. In this case, it counts how many lines
+		(i.e., established TCP connections) were output by the ss command.
+
+    Result: ctcp will store the number of currently established TCP connections.
 
 14. ulog=$(users | wc -w)
 
     Command: users
-        users: Lists the currently logged-in users.
-        wc -w: Counts the number of users (words).
+        users: This command prints the usernames of all users currently logged
+		into the system. If a user has multiple sessions open
+		(e.g., in different terminal windows), their name will appear
+		multiple times.
+    wc -w:
+        -w: This option counts the number of words. Since users outputs usernames,
+		counting the words gives the number of currently logged-in users.
+
+    Result: ulog will contain the total number of currently logged-in users.
 
 15. ip=$(hostname -I)
 
@@ -165,18 +186,62 @@ wall "	#Architecture: $arc
 16. mac=$(ip link show | grep "ether" | awk '{print $2}')
 
     Command: ip link show
-        ip link show: Displays information about network interfaces.
-        grep "ether": Filters the lines containing the MAC address (which is shown as "ether").
-        awk '{print $2}': Prints the second column, which contains the MAC address.
+        ip: A versatile command used to display and configure networking,
+		routing, and tunnels.
+        link show: This part lists the network interfaces available on the system,
+		including details like status, MAC address, and interface name.
+    grep "ether":
+        grep: Searches for a specific string or pattern in the output.
+        "ether": This word appears in the output of 'ip link show' next to the MAC
+		addresses of network interfaces. The grep command filters the
+		output to show only lines that contain the word "ether".
+    awk '{print $2}':
+        awk: A text processing tool that splits input based on whitespace and
+		allows selecting specific fields.
+        '{print $2}': Selects the second field in the line, which corresponds
+		to the MAC address.
+
+    Result: mac will store the MAC address of the network interface.
 
 17. cmds=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
 
-    Command: journalctl _COMM=sudo
-        journalctl _COMM=sudo: Retrieves logs for the sudo command.
-        grep COMMAND: Filters lines containing the word "COMMAND" (these are logs where users have executed commands with sudo).
-        wc -l: Counts how many times sudo has been used.
+    Command: journalctl_COMM=sudo
+        journalctl: A command used to view logs from the systemd journal,
+		which is the default logging mechanism on many Linux systems.
+        _COMM=sudo: This filter tells journalctl to only display logs related
+		to the sudo command. _COMM=sudo restricts the log entries to
+		those where the executable name is sudo.
+    grep COMMAND:
+        This command looks for log entries that contain the word "COMMAND".
+		These entries typically include the commands that were run using
+		sudo. The output consists of lines where sudo was used to execute
+		a command.
+
+    Result: cmds will store the total number of sudo commands executed (that are logged).
 
 18. wall " #Architecture: $arc..."
 
-    Command: wall
-        wall: Sends a message to all logged-in users. 
+	This part of the script is a wall command that broadcasts a system report to all
+		logged-in users.
+	The wall (short for "write all") command sends a message to every user currently
+		logged into the system.
+
+The message being broadcasted in this script provides the following information:
+
+    Architecture ($arc): System architecture details gathered from the uname -a command.
+    CPU physical ($pcpu): The number of physical CPUs.
+    vCPU ($vcpu): The number of virtual CPUs (logical CPUs).
+    Memory Usage ($uram/${fram}MB ($pram%)): Memory currently in use ($uram),
+	total memory ($fram), and the percentage used ($pram%).
+    Disk Usage ($udisk/${fdisk}Gb ($pdisk%)): Used disk space ($udisk),
+	total disk space ($fdisk), and percentage of disk used ($pdisk%).
+    CPU load ($cpul): Current CPU load percentage.
+    Last boot ($lb): The date and time when the system last booted.
+    LVM use ($lvmu): Whether or not the system is using LVM (Logical Volume Manager).
+    Connections TCP ($ctcp): Number of established TCP connections.
+    User log ($ulog): Number of users currently logged into the system.
+    Network ($ip ($mac)): IP address ($ip) and MAC address ($mac) of the system.
+    Sudo ($cmds cmd): The number of times the sudo command has been executed.
+
+	This script, when executed, compiles and sends this system information in a
+		formatted way to all users currently logged in.
