@@ -137,5 +137,42 @@
 
 		*edit monitoring.sh
 
+11. Edit sudoers file again
+	In VM:
+	type:
+		sudo visudo
+	add:
+		'username' ALL=(root) NOPASSWD: /usr/local/bin/monitoring.sh 
+	under:
+		%sudo ALL=(ALL:ALL) ALL
+
+	then:
+		sudo reboot
+
+12. Add rule in crontab
+		type:
+			sudo /usr/local/bin/monitoring.sh
+			sudo crontab -e
+	in the end of file:
+		type:
+			*/10 * * * * /usr/local/bin/monitoring.sh
+		* '*' means every division of time.
+
+13. Getting the Signature.txt (Last Part Before Defence)
+
+⚠️ Warning: before you generate a signature number, turn off your Virtual Machine. ⚠️
+
+In terminal:
+	type:
+		cd
+		cd 'location where the VM is'
+    		shasum 'VMname'.vdi
+    	Copy:	
+		the output number
+		create a signature.txt file
+		paste that number in the file.
+
+	submit the signature.txt file with the output number in it.
+
 
 
