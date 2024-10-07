@@ -88,16 +88,16 @@
 8. Creating a Group & a User to assign
 	type:
 		sudo groupadd "user"42
-    		sudo groupadd "evaluating"
     		getent group
     		cut -d: -f1 /etc/passwd (to check local users)
-    		sudo adduser "new_username"
-		sudo usermod -aG "user"42 "username"
-		sudo usermod -aG "evaluating" "new_username"
+		sudo usermod -aG user42 "user"42
 		getent group "user"42 (to check if the user is the group)
-		getent group "evaluating" (to check the group)
-		groups
 		chage -l "new_username" (to check if the password rules are working in users)
+		groupdel "groupname" - to delete groups
+		userdel "username" - to delete users
+
+		chage -M 30 -m 2 -W 7 "user"42
+		chage -M 30 -m 2 -W 7 root	<- to apply password policies.
 
 	Then create sudo.log like this; "/var/log/sudo/sudo.log"
 
