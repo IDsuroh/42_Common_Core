@@ -151,7 +151,6 @@
 
 12. Add rule in crontab
 		type:
-			sudo /usr/local/bin/monitoring.sh
 			sudo crontab -e
 	in the end of file:
 		type:
