@@ -27,7 +27,8 @@ to the computer and printing the response.
 A computer terminal is an electronic or electromechanical hardware device
 that can be used for entering data into, and transcribing data from,
 a computer or a computing system. The teletype was an example of
-an early day hardcopy terminal, and predated the use of a computer screen by decades. Early terminals were inexpensive devices but very slow compared to punched cards
+an early day hardcopy terminal, and predated the use of a computer screen by decades.
+Early terminals were inexpensive devices but very slow compared to punched cards
 or paper tape for input, but as the technology improved and video displays
 were introduced, terminals pushed these older forms of interaction from the industry.
 
