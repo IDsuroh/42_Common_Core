@@ -175,3 +175,7 @@ In terminal:
 		a file. This hash value can be compared against a known value to ensure
 		that the file has not been altered or corrupted.
 
+
+changing hostname:
+          sudo nano /etc/hostname
+          sudo nano /etc/hosts
