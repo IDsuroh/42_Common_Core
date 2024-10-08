@@ -14,9 +14,22 @@ iolog_dir           string  Directory in which to store input/output logs.
 passwd_tries        number  Number of tries to enter a password.
 
 ***tty? the tty device is a tool to show text output.
-A teleprinter is an electromechanical device that can be used to send and receive typed messages through various communications channels, in both point-to-point and point-to-multipoint configurations. Initially they were used in telegraphy, which developed in the late 1830s and 1840s as the first use of electrical engineering, though teleprinters were not used for telegraphy until 1887 at the earliest. The machines were adapted to provide a user interface to early mainframe computers and minicomputers, sending typed data to the computer and printing the response.
+A teleprinter is an electromechanical device that can be used to
+send and receive typed messages through various communications channels
+in both point-to-point and point-to-multipoint configurations.
+Initially they were used in telegraphy, which developed in the late
+1830s and 1840s as the first use of electrical engineering,
+though teleprinters were not used for telegraphy until 1887 at the earliest.
+The machines were adapted to provide a user interface to
+early mainframe computers and minicomputers, sending typed data
+to the computer and printing the response.
 
-A computer terminal is an electronic or electromechanical hardware device that can be used for entering data into, and transcribing data from, a computer or a computing system. The teletype was an example of an early day hardcopy terminal, and predated the use of a computer screen by decades. Early terminals were inexpensive devices but very slow compared to punched cards or paper tape for input, but as the technology improved and video displays were introduced, terminals pushed these older forms of interaction from the industry.
+A computer terminal is an electronic or electromechanical hardware device
+that can be used for entering data into, and transcribing data from,
+a computer or a computing system. The teletype was an example of
+an early day hardcopy terminal, and predated the use of a computer screen by decades. Early terminals were inexpensive devices but very slow compared to punched cards
+or paper tape for input, but as the technology improved and video displays
+were introduced, terminals pushed these older forms of interaction from the industry.
 
 reference:
 https://www.reddit.com/r/linuxquestions/comments/oikda1/what_the_hell_is_tty/
