@@ -14,6 +14,18 @@ iolog_dir           string  Directory in which to store input/output logs.
 passwd_tries        number  Number of tries to enter a password.
 
 ***tty? the tty device is a tool to show text output.
+
+short answer:
+When it comes to Linux, TTY is an abstract device in UNIX and Linux.
+Sometimes it refers to a physical input device such as a serial port,
+and sometimes it refers to a virtual TTY where it allows users to
+interact with the system (reference).
+
+TTY is a subsystem in Linux and Unix that makes process management,
+line editing, and session management possible at the kernel level
+through TTY drivers.
+
+history:
 A teleprinter is an electromechanical device that can be used to
 send and receive typed messages through various communications channels
 in both point-to-point and point-to-multipoint configurations.
