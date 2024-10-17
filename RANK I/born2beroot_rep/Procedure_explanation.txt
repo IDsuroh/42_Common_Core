@@ -173,7 +173,8 @@ In terminal:
 
 	submit the signature.txt file with the output number in it.
 
-	*'shasum' is a command-line utility used to compute and verify 'SHA (Secure Hash 				Algorithm)' checksums for files. It is commonly used for verifying the
+	*'shasum' is a command-line utility used to compute and verify 'SHA (Secure Hash
+		Algorithm)' checksums for files. It is commonly used for verifying the
 		integrity of files by generating a unique hash value for the contents of
 		a file. This hash value can be compared against a known value to ensure
 		that the file has not been altered or corrupted.
