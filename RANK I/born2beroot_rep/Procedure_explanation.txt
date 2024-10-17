@@ -182,3 +182,5 @@ In terminal:
 changing hostname:
           sudo nano /etc/hostname
           sudo nano /etc/hosts
+
+	sudo nano /etc/os-release
