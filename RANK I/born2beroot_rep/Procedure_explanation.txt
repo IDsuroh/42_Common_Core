@@ -22,6 +22,7 @@
 
 	*apt and aptitude
 		- aptitude is a higher level package manager
+                - aptitude has a GUI graphic user interface
 		- apt is a lower level PM which can be used
 			by other higher level package managers
 		- aptitude is smarter and can automatically remove unused packages
