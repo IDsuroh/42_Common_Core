@@ -58,6 +58,8 @@
 	*UFW
 		- an interface to modify the fire wall of the device
 		- can configure ports to allow connections and closing
+		***  UFW is a oneshot service, which performs one task then exits.
+			However, it's still considered active,
 
 6. Connect to SSH
 	In our Campus, NAT doesn't work so change to 'bridged adaptor'.
