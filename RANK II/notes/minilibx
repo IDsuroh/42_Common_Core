@@ -1,8 +1,0 @@
-
-
-MinilibX is a simple X-Window (X11R6) programming API in C,
-    designed for students, suitable for X-beginners.
-
-    - tiny graphics library
-    - allows the most basic things for rendering something in screens.
-    
