@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:44:08 by suroh             #+#    #+#             */
-/*   Updated: 2024/10/27 10:57:45 by suroh            ###   ########.fr       */
+/*   Updated: 2024/10/27 11:11:29 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,21 @@
 # define COLOR_VIOLET      0x8A2BE2  // RGB(138, 43, 226)
 # define COLOR_LAVENDER    0xE6E6FA  // RGB(230, 230, 250)
 # define COLOR_NAVY        0x000080  // RGB(0, 0, 128)
-# define COLOR_TEAL        0x008080  // RGB(0, 128, 128)
-# define COLOR_PLUM        0xDDA0DD  // RGB(221, 160, 221)
 # define COLOR_SILVER      0xC0C0C0  // RGB(192, 192, 192)
 # define COLOR_SLATE_BLUE  0x6A5ACD  // RGB(106, 90, 205)
+# define COLOR_SKY_BLUE         0x87CEEB  // RGB(135, 206, 235)
+# define COLOR_DEEP_SKY_BLUE    0x00BFFF  // RGB(0, 191, 255)
+# define COLOR_DODGER_BLUE      0x1E90FF  // RGB(30, 144, 255)
+# define COLOR_CORNFLOWER_BLUE  0x6495ED  // RGB(100, 149, 237)
+# define COLOR_MEDIUM_SLATE_BLUE 0x7B68EE  // RGB(123, 104, 238)
+# define COLOR_STEEL_BLUE       0x4682B4  // RGB(70, 130, 180)
+# define COLOR_LIGHT_STEEL_BLUE  0xB0E0E6  // RGB(176, 224, 230)
+# define COLOR_ROYAL_BLUE       0x4169E1  // RGB(65, 105, 225)
+# define COLOR_PERIWINKLE       0xCCCCFF  // RGB(204, 204, 255)
+# define COLOR_ICE_BLUE         0xC9FFFF  // RGB(201, 255, 255)
+# define COLOR_LIGHT_BLUE       0xADD8E6  // RGB(173, 216, 230)
+# define COLOR_TEAL_BLUE        0x367588  // RGB(54, 117, 136)
+# define COLOR_CYAN             0x00FFFF  // RGB(0, 255, 255)
 
 //structs
 //IMAGE struct for pixel buffer
