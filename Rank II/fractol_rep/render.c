@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 20:02:14 by suroh             #+#    #+#             */
-/*   Updated: 2024/10/24 17:58:20 by suroh            ###   ########.fr       */
+/*   Updated: 2024/10/27 13:29:23 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,25 @@ static void	pixel_handler(int x, int y, t_fct *fct)
 	}
 	modified_pixel_put(x, y, &fct->img, COLOR_WHITE);
 }
+
+/* the z value is being updated on every iteration where it is based
+ * on the squaring of its previous value and the addition of c.
+ * if ((z.real * z.real) + (z.i * z.i) > fct->esc_val) this if condition
+ * is met, it means that the iteration has escaped. Therefore coloring
+ * the outside layer of the circles.
+ * Also, the z.real and z.i value goes in circles to infinity because
+ * of the calculation.
+ * If the input is ./fractol mandelbrot, the 'c' in
+ * z = sum_cmplx(square_cmplx(z), c) becomes 'z'.
+ * But with julia, the real and i value changes. and stayes individual
+ * from 'z'.
+ * based on the pythagorean theorem where a^2 + b^2 = c^2, and by
+ * calculating the real values and i values, we can get the value of
+ * c^2. By so, we can get the Hypotenuse of the drawing which is the
+ * escape_value. Since the drawing we are dealing with only has the range
+ * from -2 to +2 both x and y axis, the escape_value becomes 2*2=4.
+ * The c.real and c.i is only activated when the input is for julia.
+ */
 
 void	fct_rdr(t_fct *fct)
 {
