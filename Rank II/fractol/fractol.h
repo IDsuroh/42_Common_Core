@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:44:08 by suroh             #+#    #+#             */
-/*   Updated: 2024/10/27 10:54:36 by suroh            ###   ########.fr       */
+/*   Updated: 2024/10/27 10:55:41 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <X11/Xlib.h>
 # include <X11/Xatom.h>
 # include "minilibx-linux/mlx.h"
-# define ERRMSG "Usage: /.fractol \n\t\t[mandelbrot | julia] \n\t\t\t[real] [i]\n"
+# define ERRMSG "\n\tUsage: /.fractol [mandelbrot | julia] [real] [i]\n"
 # define WDT 800
 # define HGT 800
 # define COLOR_BLACK       0x000000  // RGB(0, 0, 0)
