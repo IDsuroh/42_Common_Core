@@ -21,7 +21,7 @@ static void	malloc_error(void)
 static void	data_init(t_fct *fct)
 {
 	fct->esc_val = 4;
-	fct->itr_def = 42;
+	fct->itr_def = 40;
 	fct->sft_x = 0.0;
 	fct->sft_y = 0.0;
 	fct->zoom = 1.0;
@@ -54,7 +54,6 @@ void	fct_init(t_fct *fct)
 		free(fct->mlx_con);
 		malloc_error();
 	}
-	mlx_mouse_show(fct->mlx_con, fct->mlx_win);
 	fct->img.pixels_ptr = mlx_get_data_addr(fct->img.img_ptr,
 			&fct->img.biperpix,
 			&fct->img.line_len,

@@ -33,10 +33,10 @@ int	keys(int keysym, t_fct *fct)
 		fct->sft_y -= (0.5 * fct->zoom);
 	else if (keysym == XK_Down)
 		fct->sft_y += (0.5 * fct->zoom);
-	else if (keysym == XK_equal)
-		fct->itr_def += 10;
+	else if (keysym == XK_equal || keysym == XK_plus)
+		fct->itr_def += 5;
 	else if (keysym == XK_minus)
-		fct->itr_def -= 10;
+		fct->itr_def -= 5;
 	fct_rdr(fct);
 	return (0);
 }
