@@ -6,7 +6,7 @@
 /*   By: suroh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:02:40 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 19:11:33 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/12 22:04:31 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 
 //utility functions
 void	error_msg(void);
-void	putstr_fd(char *s, int fd);
+void	execute(char *av, char **envp);
+char	*find_loc(char *command, char **envp);
+
+//main functions
+void	child_process(char **av, char **envp, int *fd);
+void	parent_process(char **av, char **envp, int *fd);
 
 #endif

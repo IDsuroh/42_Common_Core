@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 19:55:41 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/12 22:53:08 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ int	main(int ac, char **av, char **envp)
  * The envp array is populated automatically by the operating system
  * with all the environment variables that were present at the time
  * the program was started.
+ *
+ * the envp parameter is automatically recognized.
+ * the envp pointer array holds all the environment variables that
+ * are set in the system at the time of the program's execution.
  *
  * envp[0] = "PATH=/usr/bin:/bin";
  * envp[1] = "USER=exampleuser";

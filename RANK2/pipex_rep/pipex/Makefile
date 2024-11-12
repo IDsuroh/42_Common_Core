@@ -6,7 +6,7 @@
 #    By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/10 21:12:22 by suroh             #+#    #+#              #
-#    Updated: 2024/11/12 19:08:41 by suroh            ###   ########.fr        #
+#    Updated: 2024/11/12 22:19:11 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = (c files)
+SRC = pipex.c utils.c 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 OBJDIR = ./obj_files
 LIB = ./libft/
@@ -36,12 +36,14 @@ $(OBJDIR)/%.o: %.c
 
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "Cleaned Object Files."
+	@echo "\033[35mCleaned Object Files."
 
 fclean: clean
 	@rm -rf $(NAME)
 	@make fclean -C $(LIB)
-	@echo "Cleaned Everything."
+	@find . -type f ! -name "*.c" ! -name "*.h" ! -name "Makefile" ! -path "./libft/*" -exec rm -f {} +
+	@find . -type d ! -path "./libft" ! -path "." -exec rm -rf {} +
+	@echo "\033[34mCleaned Everything."
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 18:46:09 by suroh             #+#    #+#             */
-/*   Updated: 2024/05/05 16:41:48 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/12 21:39:17 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	mem = malloc(sizeof(char) * (value + 1));
 	if (!mem)
 		return (NULL);
-	ft_memmove(mem, s + start, value); // would put 'ft_memcpy' because there is no memory overlap in the first place.
+	ft_memmove(mem, s + start, value);
 	mem[value] = '\0';
 	return ((char *)mem);
 }

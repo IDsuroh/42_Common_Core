@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:41:26 by suroh             #+#    #+#             */
-/*   Updated: 2024/04/24 18:27:58 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/12 21:37:37 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@ char	**ft_split(const char *s, char c)
 		mem[i] = (char *)ft_calloc(sizeof(char), (count + 1));
 		if (!mem[i])
 			return (ft_free(mem, i));
-		ft_memmove(mem[i], s, count); // would put 'ft_memcpy' because there is no memory overlap in the first place.
+		ft_memmove(mem[i], s, count);
 		mem[i++][count] = '\0';
 		s += count;
 	}
 	mem[i] = NULL;
 	return ((char **)mem);
 }
-
+// would put 'ft_memcpy' because there is no memory overlap
+// in the first place.
 // int	main()
 // {
 // 	char	*str = "ab__42cd__dfgdfg";
