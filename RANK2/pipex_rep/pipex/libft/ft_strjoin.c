@@ -1,36 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 18:29:58 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 19:16:24 by suroh            ###   ########.fr       */
+/*   Created: 2024/04/23 09:05:32 by suroh             #+#    #+#             */
+/*   Updated: 2024/04/23 09:29:41 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *nw)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	if (!lst || !nw)
-		return ;
-	nw->next = *lst;
-	*lst = nw;
+	char	*mem;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	mem = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (!mem)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		mem[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		mem[i] = s2[j];
+		i++;
+		j++;
+	}
+	mem[i] = '\0';
+	return (mem);
 }
 
 // int	main(void)
 // {
-// 	t_list	*new;
-// 	t_list	*new1;
-// 	new = ft_lstnew("HI");
-// 	new1 = ft_lstnew("string");
-// 	printf("original '%s'\n",
-// 	(char *)new1->content);
-// 	ft_lstadd_front(&new1, new);
-// 	printf("new1's new '%s'\n", (char *)new1->content);
-// 	printf("new1's next '%s'\n",
-// 	(char *)new1->next->content);
+// 	char	*str = ft_strjoin("this", "thats");
+// 	printf("%s\n", str);
 // 	return (0);
 // }

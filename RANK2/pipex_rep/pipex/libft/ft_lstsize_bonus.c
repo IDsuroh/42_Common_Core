@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 18:29:58 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 19:16:24 by suroh            ###   ########.fr       */
+/*   Created: 2024/04/30 11:16:21 by suroh             #+#    #+#             */
+/*   Updated: 2024/04/30 12:05:42 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *nw)
+int	ft_lstsize(t_list *lst)
 {
-	if (!lst || !nw)
-		return ;
-	nw->next = *lst;
-	*lst = nw;
+	int	c;
+
+	c = 0;
+	while (lst != NULL)
+	{
+		c++;
+		lst = lst->next;
+	}
+	return (c);
 }
 
-// int	main(void)
+// int	main()
 // {
-// 	t_list	*new;
-// 	t_list	*new1;
-// 	new = ft_lstnew("HI");
-// 	new1 = ft_lstnew("string");
-// 	printf("original '%s'\n",
-// 	(char *)new1->content);
-// 	ft_lstadd_front(&new1, new);
-// 	printf("new1's new '%s'\n", (char *)new1->content);
-// 	printf("new1's next '%s'\n",
-// 	(char *)new1->next->content);
+// 	t_list	*lst = ft_lstnew("content");
+// 	t_list	*new = ft_lstnew("strings");
+// 	printf("%d\n", ft_lstsize(lst));
+// 	printf("%d\n", ft_lstsize(new));
+// 	ft_lstadd_front(&lst, new);
+// 	printf("%d\n", ft_lstsize(lst));
+// 	while (lst != NULL)
+// 	{
+// 		t_list *nn = lst->next;
+// 		free(lst);
+// 		lst = nn;
+// 	}
 // 	return (0);
 // }
