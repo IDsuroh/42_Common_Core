@@ -6,11 +6,61 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/10 23:13:29 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/12 19:55:41 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	child_process(char **av, char **envp, int *fd)
+{
+	int	filein;
+
+	filein = open(av[1], O_RDONLY, 0777);
+	if (filein == -1)
+		error_msg();
+	dup2(filein, STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	execute(av[2], envp);
+}
+
+/* The combination of these dup2() calls sets up the process so that:
+ *
+ * Reading: The process reads from the input file (av[1]) because
+ * 	STDIN_FILENO is now connected to filein.
+ * Writing: The process writes to the pipe (instead of stdout) because
+ * 	STDOUT_FILENO is now connected to fd[1].
+ *
+ * 0777: is a file permission mode (in octal format). This argument
+ * 	is used when creating a new file if it doesn't exist.
+ * 	The mode 0777 grants full read, write, and execute permissions
+ * 	to the file for the owner, group, and others.
+ * Note: In the context of opening an existing file, the third
+ * 	argument (permissions) is usually ignored.
+ * 	It is only used when creating a new file, where it specifies
+ * 	the permissions for the newly created file.
+ * 	*/
+
+void	parent_process(char **av, char **envp, int *fd)
+{
+	int	fileout;
+
+	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fileout == -1)
+		error_msg();
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fileout, STDOUT_FILENO);
+	close(fd[1]);
+	execute(av[3], envp);
+}
+
+/* fd[0] = the read end is duplicated to the STDIN and then printed
+ * out to the duplicated STDOUT which is from fileout. The file that
+ * is opened and is able to write-only, create if not-exist, truncate
+ * (O_TRUNC will erase any data in the file as soon as the file gets
+ * opened).
+ *	*/
 
 int	main(int ac, char **av, char **envp)
 {
@@ -31,8 +81,8 @@ int	main(int ac, char **av, char **envp)
 	}
 	else
 	{
-		putstr_fd("\n\t\t\033[31mError: Wrong Format\n\e[0m", 2);
-		putstr_fd("\t./pipex <file1> <cmd1> <cmd2> <file2>\n\n", 1);
+		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\e[0m", 2);
+		ft_putstr_fd("\t./pipex <file1> <cmd1> <cmd2> <file2>\n\n", 1);
 	}
 }
 
