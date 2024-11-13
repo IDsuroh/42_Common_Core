@@ -6,15 +6,15 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 22:30:25 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/13 20:31:51 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error_msg(void)
+void	error_msg(const char *msg)
 {
-	printf("Error: %s\n", strerror(errno));
+	perror(msg);
 	exit(EXIT_FAILURE);
 }
 
@@ -83,12 +83,11 @@ void	execute(char *av, char **envp)
 		while (command[++i])
 			free(command[i]);
 		free(command);
-		error_msg();
+		error_msg(av);
 	}
 	if (execve(location, command, envp) == -1)
-		error_msg();
+		error_msg("Can't Execute");
 }
-
 /* On error, execve() will return a -1. So if successfully ran, it will
  * execute command in the location.
  *

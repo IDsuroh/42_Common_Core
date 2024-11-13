@@ -6,21 +6,16 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 22:53:08 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/13 20:29:28 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child_process(char **av, char **envp, int *fd)
+void	child_process(char **av, char **envp, int *fd, int filein)
 {
-	int	filein;
-
-	filein = open(av[1], O_RDONLY, 0777);
-	if (filein == -1)
-		error_msg();
-	dup2(filein, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
+	dup2(filein, STDIN_FILENO);
 	close(fd[0]);
 	execute(av[2], envp);
 }
@@ -42,13 +37,8 @@ void	child_process(char **av, char **envp, int *fd)
  * 	the permissions for the newly created file.
  * 	*/
 
-void	parent_process(char **av, char **envp, int *fd)
+void	parent_process(char **av, char **envp, int *fd, int fileout)
 {
-	int	fileout;
-
-	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (fileout == -1)
-		error_msg();
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
 	close(fd[1]);
@@ -65,25 +55,30 @@ void	parent_process(char **av, char **envp, int *fd)
 int	main(int ac, char **av, char **envp)
 {
 	int		fd[2];
+	int		filein;
+	int		fileout;
 	pid_t	pid;
 
 	if (ac == 5)
 	{
 		if (pipe(fd) == -1)
-			error_msg();
+			error_msg("pipe failed");
+		filein = open(av[1], O_RDONLY, 0777);
+		fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if (filein == -1)
+			error_msg(av[1]);
+		if (fileout == -1)
+			error_msg(av[4]);
 		pid = fork();
 		if (pid == -1)
-			error_msg();
+			error_msg("fork failed");
 		if (pid == 0)
-			child_process(av, envp, fd);
-		wait(NULL);
-		parent_process(av, envp, fd);
+			child_process(av, envp, fd, filein);
+		waitpid(pid, NULL, 0);
+		parent_process(av, envp, fd, fileout);
 	}
 	else
-	{
-		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\e[0m", 2);
-		ft_putstr_fd("\t./pipex <file1> <cmd1> <cmd2> <file2>\n\n", 1);
-	}
+		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\n\e[0m", 2);
 }
 
 /* Clarification on How envp Works at Program Start:
@@ -121,6 +116,16 @@ int	main(int ac, char **av, char **envp)
  * Consistency: Using envp maintains consistency between how your
  * 	pipex program runs the commands and how the shell would execute
  * 	them.
+ *
+ * What Does waitpid(pid1, NULL, 0) Do?
+ *
+ *	In the code waitpid(pid1, NULL, 0), you're telling the parent process to:
+ *
+ *   Wait for the child with the process ID pid1 to terminate.
+ *   Do nothing with the exit status of the child
+ *   	(since the second argument is NULL).
+ *   Block the parent until the child process finishes
+ *   	(since options is set to 0).
  *
  * If you don't pass envp when using execve():
  *
