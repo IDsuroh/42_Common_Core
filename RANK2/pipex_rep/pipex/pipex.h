@@ -6,7 +6,7 @@
 /*   By: suroh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:02:40 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/13 19:32:04 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/17 14:45:58 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 # include "libft/libft.h"
 
 //utility functions
-void	error_msg(const char *msg);
+void	error_suc(const char *msg);
+void	error_exit(const char *msg);
 void	execute(char *av, char **envp);
 char	*find_loc(char *command, char **envp);
 
 //main functions
-void	child_process(char **av, char **envp, int *fd, int filein);
-void	parent_process(char **av, char **envp, int *fd, int fileout);
+void	child_process(char **av, char **envp, int *fd);
+void	parent_process(char **av, char **envp, int *fd);
 
 #endif

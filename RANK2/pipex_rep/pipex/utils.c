@@ -6,16 +6,27 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/13 20:31:51 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/17 14:33:17 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error_msg(const char *msg)
+void	error_cmd(const char *msg)
 {
 	perror(msg);
-	exit(EXIT_FAILURE);
+	exit(127);
+}
+
+void	error_suc(const char *msg)
+{
+	perror(msg);
+}
+
+void	error_exit(const char *msg)
+{
+	perror(msg);
+	exit(1);
 }
 
 /*
@@ -30,7 +41,7 @@ char	*find_loc(char *command, char **envp)
 	int		i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
 	full_path = ft_split(envp[i] + 5, ':');
 	i = 0;
@@ -75,18 +86,21 @@ void	execute(char *av, char **envp)
 	char	*location;
 	int		i;
 
-	command = ft_split(av, ' ');
-	location = find_loc(command[0], envp);
-	if (!location)
+	if (av != NULL && av[0] != '\0')
 	{
-		i = -1;
-		while (command[++i])
-			free(command[i]);
-		free(command);
-		error_msg(av);
+		command = ft_split(av, ' ');
+		location = find_loc(command[0], envp);
+		if (!location)
+		{
+			i = -1;
+			while (command[++i])
+				free(command[i]);
+			free(command);
+			error_cmd(av);
+		}
+		if (execve(location, command, envp) == -1)
+			error_exit("Can't Execute");
 	}
-	if (execve(location, command, envp) == -1)
-		error_msg("Can't Execute");
 }
 /* On error, execve() will return a -1. So if successfully ran, it will
  * execute command in the location.
