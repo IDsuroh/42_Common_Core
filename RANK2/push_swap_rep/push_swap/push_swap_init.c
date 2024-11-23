@@ -1,0 +1,139 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_init.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/21 19:28:15 by suroh             #+#    #+#             */
+/*   Updated: 2024/11/21 22:04:03 by suroh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	set_current_position(t_stack_node *stack)
+{
+	int	i;
+	int	middle;
+
+	if (stack == NULL)
+		return ;
+	middle = stack_len(stack) / 2;
+	i = 0;
+	while (stack)
+	{
+		stack->info.position = i;
+		if (i <= middle)
+			stack->info.above_middle = true;
+		else
+			stack->info.above_middle = false;
+		stack = stack->links.next;
+		i++;
+	}
+}
+
+/* This function gives a position number to every node in the stack.
+ * It is important to set current positions to each because the movement
+ * efficiency involves whether the number to move is below or above the medium.
+ * 	*/
+
+static void	target_setting(t_stack_node *a, t_stack_node *b)
+{
+	t_stack_node	*current_a_node;
+	t_stack_node	*target;
+	long			target_position;
+
+	while (b)
+	{
+		target_position = LONG_MAX;
+		current_a_node = a;
+		while (current_a_node)
+		{
+			if (current_a_node->info.nbr > b->info.nbr
+				&& current_a_node->info.nbr < target_position)
+			{
+				target_position = current_a_node->info.nbr;
+				target = current_a_node;
+			}
+			current_a_node = current_a_node->links.next;
+		}
+		if (target_position == LONG_MAX)
+			b->links.target = find_min_node(a);
+		else
+			b->links.target = target;
+		b = b->links.next;
+	}
+}
+
+/* This function sets the targets of the nodes in stack 'b'.
+ * if there are no number that are bigger than the current 'b' node, it will
+ * target the smallest node of stack 'a'.
+ * if there are numbers that are bigger than the current 'b' node, the
+ * while loop of current_a_node will run and narrow down the range untill there
+ * is only one number that is bigger than the current 'b' node, which is
+ * the closest biggest number to the current 'b' node.
+ * 	*/
+
+void	movement_cost(t_stack_node *a, t_stack_node *b)
+{
+	int	len_a;
+	int	len_b;
+
+	len_a = stack_len(a);
+	len_b = stack_len(b);
+	while (b)
+	{
+		b->info.mov_cost = b->info.position;
+		if ((b->info.above_middle) == false)
+			b->info.mov_cost = len_b - (b->info.position);
+		if ((b->links.target->info.above_middle) == true)
+			b->info.mov_cost += b->links.target->info.position;
+		else
+			b->info.mov_cost += len_a - (b->links.target->info.position);
+		b = b->links.next;
+	}
+}
+
+/* This function, movement count, counts how many movement cost it will take to
+ * push a node from stack 'b' to stack 'a'. This sets a cost of every node in
+ * stack 'b'.
+ * Cost in this program means how many movements are needed to bring the node
+ * to the very top of the stack.
+ *	*/
+
+void	set_min_cost(t_stack_node *b)
+{
+	long			fit_nbr;
+	t_stack_node	*fit_node;
+
+	if (b == NULL)
+		return ;
+	fit_nbr = LONG_MAX;
+	while (b)
+	{
+		if (b->info.mov_cost < fit_nbr)
+		{
+			fit_nbr = b->info.mov_cost;
+			fit_node = b;
+		}
+		b = b->links.next;
+	}
+	fit_node->info.least_mov = true;
+}
+
+/* This function is to find out which node has the least movement cost.
+ * This allows which node is the one to be pushed back to the 'a' stack.
+ *	*/
+
+void	node_initiation(t_stack_node *a, t_stack_node *b)
+{
+	set_current_position(a);
+	set_current_position(b);
+	target_setting(a, b);
+	movement_cost(a, b);
+	set_min_cost(b);
+}
+
+/* This node initiation will run everytime a movement is done.
+ * 	*/
