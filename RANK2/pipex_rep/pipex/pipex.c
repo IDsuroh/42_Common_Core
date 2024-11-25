@@ -6,36 +6,90 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/17 14:49:18 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:14:41 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child_process(char **av, char **envp, int *fd)
+static void	init_pipex(t_pipex *pipex, char **av)
 {
-	int	ghostfile;
-	int	filein;
+	pipex->filein = open(av[1], O_RDONLY);
+	pipex->fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (pipe(pipex->fd) == -1)
+		error_exit("Pipe creation failed");
+}
 
-	filein = open(av[1], O_RDONLY);
+static pid_t	handle_child_process(t_data *data)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		error_exit("fork failed");
+	if (pid == 0)
+		data->child_func(data->av, data->envp, data->fd, data->file);
+	return (pid);
+}
+
+void	child_process_1(char **av, char **envp, int *fd, int filein)
+{
 	if (filein == -1)
-		error_suc(av[1]);
+		error_exit(av[1]);
 	dup2(fd[1], STDOUT_FILENO);
-	if (dup2(filein, STDIN_FILENO) == -1)
-	{
-		close(filein);
-		ghostfile = open("ghost", O_CREAT);
-		dup2(ghostfile, STDIN_FILENO);
-		close(ghostfile);
-		unlink("ghost");
-	}
-	close(filein);
+	dup2(filein, STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
 	execute(av[2], envp);
 }
 
-/* 
+void	child_process_2(char **av, char **envp, int *fd, int fileout)
+{
+	if (fileout == -1)
+		error_exit(av[4]);
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fileout, STDOUT_FILENO);
+	close(fd[1]);
+	close(fd[0]);
+	execute(av[3], envp);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	t_pipex	pipex;
+	t_data	data1;
+	t_data	data2;
+	int		status1;
+	int		status2;
+
+	if (ac != 5)
+		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\n\e[0m", 2);
+	init_pipex(&pipex, av);
+	data1 = (t_data){av, envp, pipex.fd, pipex.filein, child_process_1};
+	data2 = (t_data){av, envp, pipex.fd, pipex.fileout, child_process_2};
+	pipex.pid1 = handle_child_process(&data1);
+	pipex.pid2 = handle_child_process(&data2);
+	close(pipex.fd[0]);
+	close(pipex.fd[1]);
+	waitpid(pipex.pid1, &status1, 0);
+	status2 = get_child_exit_status(pipex.pid2);
+	if (pipex.fileout == -1)
+		error_exit("Don't have permission to Write/Create/Truncate");
+	if (status2 != 0)
+	{
+		perror("PID2 status");
+		exit(status2);
+	}
+}
+
+/* Why use Structs?
+ * To store data easily and manipulate with more control (in my opinion).
+ * more over, to reduce the function lines because norminette is a bitch.
+ * data1 = (t_data){av, envp, pipex.fd, pipex.filein, child_process_1};
+ * is called a compound literals.
+ * It is not in the standard C, but is supported in the C99 standard.
+ * and the bitch allows it.
+ *
  * Why Use dup2()?
  *
  *   Simplicity in Command Execution:
@@ -53,7 +107,6 @@ void	child_process(char **av, char **envp, int *fd)
  * 	STDIN_FILENO is now connected to filein.
  * Writing: The process writes to the pipe (instead of stdout) because
  * 	STDOUT_FILENO is now connected to fd[1].
- *
  * 0777: is a file permission mode (in octal format). This argument
  * 	is used when creating a new file if it doesn't exist.
  * 	The mode 0777 grants full read, write, and execute permissions
@@ -62,50 +115,13 @@ void	child_process(char **av, char **envp, int *fd)
  * 	argument (permissions) is usually ignored.
  * 	It is only used when creating a new file, where it specifies
  * 	the permissions for the newly created file.
- * 	*/
-
-void	parent_process(char **av, char **envp, int *fd)
-{
-	int		fileout;
-
-	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (fileout == -1)
-		error_exit(av[4]);
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fileout, STDOUT_FILENO);
-	close(fileout);
-	close(fd[1]);
-	close(fd[0]);
-	execute(av[3], envp);
-}
-
-/* fd[0] = the read end is duplicated to the STDIN and then printed
+ * 	
+ * fd[0] = the read end is duplicated to the STDIN and then printed
  * out to the duplicated STDOUT which is from fileout. The file that
  * is opened and is able to write-only, create if not-exist, truncate
  * (O_TRUNC will erase any data in the file as soon as the file gets
  * opened).
- *	*/
-
-int	main(int ac, char **av, char **envp)
-{
-	int		fd[2];
-	pid_t	pid;
-
-	if (ac == 5)
-	{
-		if (pipe(fd) == -1)
-			error_exit("pipe failed");
-		pid = fork();
-		if (pid == -1)
-			error_exit("fork failed");
-		if (pid == 0)
-			child_process(av, envp, fd);
-		waitpid(pid, NULL, 0);
-		parent_process(av, envp, fd);
-	}
-	else
-		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\n\e[0m", 2);
-}
+ */
 /*
  * In this project we are asked to code a program which will immitate
  * the behavior of this shell command: ❯ < file1 cmd1 | cmd2 > file2
@@ -138,8 +154,8 @@ int	main(int ac, char **av, char **envp)
  * 	file2: Path to an output file which may or may not exist. If it exists,
  * 		it will be truncated (emptied) and should be opened write-only
  *
- *
- *
+ */
+/*
  * Clarification on How envp Works at Program Start:
  *
  * When a program is executed (e.g., from a shell or as a system
@@ -185,14 +201,34 @@ int	main(int ac, char **av, char **envp)
  *   	(since the second argument is NULL).
  *   Block the parent until the child process finishes
  *   	(since options is set to 0).
+ *	
+ * pipex.pid1 is the PID of the first child process created by
+ * handle_child_process(&data1). &status1 is the address of an integer
+ * variable where waitpid will store the child's exit status.
+ * The third parameter (0) means that waitpid will block until the specified
+ * child process terminates.
  *
- * If you don't pass envp when using execve():
+ *	If we don't use waitpid or wait, the child may enter into zombie state.
+ *	which can cause errors in commands like;
+ * 			./pipex infile "sleep 3" | "ls" outfile
+ */
+/* If you don't pass envp when using execve():
  *
  *	The command being executed might fail if it relies on any
  *	environment variable, such as PATH.
  *	The new process may not run in the intended environment,
  *	potentially causing errors or unexpected behavior.
  *
- * Large file sizes can cause a pipe deadlock. Data that the pipe can hold is
- * typically 64 KB.
- * 	*/
+ * The function get_child_exit_status checks if the pid successfully ran
+ * the commands in the parameter.
+ * waitpid(pid, &status, 0);
+ * if (WIFEXITED(status))
+ *	return (WEXITSTATUS(status));
+ * return (1);
+ * WIFEXITED–Query status to see if a child process ended normally.
+ * This macro queries the child termination status provided by the wait and
+ * waitpid functions, and determines whether the child process ended normally.
+ * 
+ * The condition if (status2 != 0) checks if the second child process.
+ * and exits program with exitfunction directly
+ */

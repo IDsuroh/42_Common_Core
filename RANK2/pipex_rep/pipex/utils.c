@@ -6,21 +6,16 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/17 14:33:17 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:07:47 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error_cmd(const char *msg)
+void	error_127(const char *msg)
 {
 	perror(msg);
 	exit(127);
-}
-
-void	error_suc(const char *msg)
-{
-	perror(msg);
 }
 
 void	error_exit(const char *msg)
@@ -32,6 +27,16 @@ void	error_exit(const char *msg)
 /*
  * simple error msg
  * 	*/
+
+int	get_child_exit_status(pid_t pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
 
 char	*find_loc(char *command, char **envp)
 {
@@ -62,6 +67,29 @@ char	*find_loc(char *command, char **envp)
 	return (0);
 }
 
+void	execute(char *av, char **envp)
+{
+	char	**command;
+	char	*location;
+	int		i;
+
+	if (av != NULL && av[0] != '\0')
+	{
+		command = ft_split(av, ' ');
+		location = find_loc(command[0], envp);
+		if (!location)
+		{
+			i = -1;
+			while (command[++i])
+				free(command[i]);
+			free(command);
+			error_127(av);
+		}
+		if (execve(location, command, envp) == -1)
+			error_exit("Can't Execute");
+	}
+}
+
 /* ft_strnstr() will find if "PATH" is present at the beginning of a
  * 	string by searching each envp[i].
  * Then ft_split() will skip the "PATH=" part and splits the string with
@@ -79,29 +107,6 @@ char	*find_loc(char *command, char **envp)
  *	if the first while loop is passed, it will eventually return
  *	0.
  *	*/
-
-void	execute(char *av, char **envp)
-{
-	char	**command;
-	char	*location;
-	int		i;
-
-	if (av != NULL && av[0] != '\0')
-	{
-		command = ft_split(av, ' ');
-		location = find_loc(command[0], envp);
-		if (!location)
-		{
-			i = -1;
-			while (command[++i])
-				free(command[i]);
-			free(command);
-			error_cmd(av);
-		}
-		if (execve(location, command, envp) == -1)
-			error_exit("Can't Execute");
-	}
-}
 /* On error, execve() will return a -1. So if successfully ran, it will
  * execute command in the location.
  *
