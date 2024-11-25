@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 18:44:48 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/23 00:28:34 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/24 20:25:11 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	add_node(t_stack_node **stack, int nbr)
  * will be linked as the current appended process, and the previous
  * node of the current node will be linked to the last_node of the stack.
  *      */
-
 
 t_stack_node	*find_last_node(t_stack_node *head)
 {

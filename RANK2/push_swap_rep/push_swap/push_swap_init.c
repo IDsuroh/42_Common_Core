@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:28:15 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/21 22:04:03 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/25 00:26:57 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,22 @@ void	movement_cost(t_stack_node *a, t_stack_node *b)
  * stack 'b'.
  * Cost in this program means how many movements are needed to bring the node
  * to the very top of the stack.
+ *
+ * if the current movement cost is below middle, the cost of movement becomes,
+ * 	the length of stack 'b' - current node's position.
+ * 	so if len_b = 9 and current node is 5
+ * 		0 <-> 1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6 <-> 7 <-> 8 <-> NULL = 9
+ * 				      ^
+ * cost:	0     1     2     3     4     4     3     2     1
+ *
+ * 	9 - 5 = 4 || 9 - 6 = 3 || 9 - 7 = 2 || 9 - 8 = 1
+ *
+ * if the target node of each 'b' node is above middle;
+ * 	b's movement cost becomes (current position + target position)
+ * if the target node of each target node of 'b' is above middle;
+ * 	the target node's position adds up to the movement cost.
+ * else
+ * 	the target node's position adds up to the reverse movement cost.
  *	*/
 
 void	set_min_cost(t_stack_node *b)

@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:26:38 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/23 00:30:02 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/25 00:23:06 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,16 @@ void			set_current_position(t_stack_node *stack);
 void			movement_cost(t_stack_node *a, t_stack_node *b);
 void			set_min_cost(t_stack_node *b);
 void			node_initiation(t_stack_node *a, t_stack_node *b);
+
+// {com_push_swap_utils.c}
+void			move_nodes(t_stack_node **a, t_stack_node **b);
+void			sort_five(t_stack_node **a, t_stack_node **b);
+void			end_rotation(t_stack_node **stack,
+					t_stack_node *top_node,
+					char stack_name);
+
+// {com_push_swap.c}
+void			push_swap(t_stack_node **a, t_stack_node **b);
 
 // {com_swaps.c}
 void			sa(t_stack_node **a, bool checker);
