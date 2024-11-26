@@ -6,13 +6,13 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:23:20 by suroh             #+#    #+#             */
-/*   Updated: 2024/04/24 16:34:04 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/26 14:44:22 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(const char *s, int fd)
 {
 	while (*s)
 		write (fd, s++, 1);
