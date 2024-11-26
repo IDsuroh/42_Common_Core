@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:39:26 by suroh             #+#    #+#             */
-/*   Updated: 2024/08/22 15:56:29 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:09:56 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *str)
 
 	i = 0;
 	if (!str)
-		return (NULL);
+		return (i);
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -32,8 +32,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	{
 		i = 0;
 		while (i < (size - 1) && src[i] != '\0')
-		{if (!s)
-		return (0);
+		{
 			dst[i] = src[i];
 			i++;
 		}

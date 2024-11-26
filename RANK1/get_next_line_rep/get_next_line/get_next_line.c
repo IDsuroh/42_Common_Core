@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:03:09 by suroh             #+#    #+#             */
-/*   Updated: 2024/08/22 16:04:20 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:05:29 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ static char	*get_current_line(char *line, int fd)
 //2: save memory size to buff
 //3: while there is nothing in the 'line', or until there is not /n
 //4: if read_check is a 0(		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}first read data is copied to line
+//		free(line);
+//		line = get_next_line(fd);
+//	}first read data is copied to line
 //6: if line has data already, it gets new data from buff
 //   the old line is freed and line is updated
 
