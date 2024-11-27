@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/25 19:14:41 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/27 01:08:03 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,19 @@
 
 static void	init_pipex(t_pipex *pipex, char **av)
 {
-	pipex->filein = open(av[1], O_RDONLY);
 	pipex->fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (access(av[1], F_OK) != 0)
+	{
+		perror(av[1]);
+		pipex->filein = -1;
+	}
+	else if (access(av[1], R_OK) != 0)
+	{
+		ft_putstr_fd("Permission Denied\n", STDOUT_FILENO);
+		exit(0);
+	}
+	else
+		pipex->filein = open(av[1], O_RDONLY);
 	if (pipe(pipex->fd) == -1)
 		error_exit("Pipe creation failed");
 }
@@ -35,12 +46,13 @@ static pid_t	handle_child_process(t_data *data)
 void	child_process_1(char **av, char **envp, int *fd, int filein)
 {
 	if (filein == -1)
-		error_exit(av[1]);
+		exit(0);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(filein, STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
-	execute(av[2], envp);
+	if (av[2][0] != '\0')
+		execute(av[2], envp);
 }
 
 void	child_process_2(char **av, char **envp, int *fd, int fileout)
@@ -51,7 +63,13 @@ void	child_process_2(char **av, char **envp, int *fd, int fileout)
 	dup2(fileout, STDOUT_FILENO);
 	close(fd[1]);
 	close(fd[0]);
-	execute(av[3], envp);
+	if (av[3][0] != '\0')
+		execute(av[3], envp);
+	else
+	{
+		pipe_reader(STDIN_FILENO);
+		close(STDIN_FILENO);
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -59,11 +77,10 @@ int	main(int ac, char **av, char **envp)
 	t_pipex	pipex;
 	t_data	data1;
 	t_data	data2;
-	int		status1;
 	int		status2;
 
 	if (ac != 5)
-		ft_putstr_fd("\n\t\t\033[31mError: Wrong Format\n\n\e[0m", 2);
+		error_exit("\n\t\t\033[31mError: Wrong Format\n\n\e[0m");
 	init_pipex(&pipex, av);
 	data1 = (t_data){av, envp, pipex.fd, pipex.filein, child_process_1};
 	data2 = (t_data){av, envp, pipex.fd, pipex.fileout, child_process_2};
@@ -71,15 +88,12 @@ int	main(int ac, char **av, char **envp)
 	pipex.pid2 = handle_child_process(&data2);
 	close(pipex.fd[0]);
 	close(pipex.fd[1]);
-	waitpid(pipex.pid1, &status1, 0);
+	waitpid(pipex.pid1, NULL, 0);
 	status2 = get_child_exit_status(pipex.pid2);
 	if (pipex.fileout == -1)
-		error_exit("Don't have permission to Write/Create/Truncate");
+		error_exit("Don't have permission to Write|Create|Truncate");
 	if (status2 != 0)
-	{
-		perror("PID2 status");
 		exit(status2);
-	}
 }
 
 /* Why use Structs?

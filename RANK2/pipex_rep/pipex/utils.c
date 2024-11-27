@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/25 19:07:47 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/27 00:49:48 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	error_127(const char *msg)
 {
-	perror(msg);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 	exit(127);
 }
 
 void	error_exit(const char *msg)
 {
-	perror(msg);
+	ft_putstr_fd(msg, 2);
+	write(1, "\n", 1);
 	exit(1);
 }
 
@@ -32,6 +34,7 @@ int	get_child_exit_status(pid_t pid)
 {
 	int	status;
 
+	status = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -73,21 +76,23 @@ void	execute(char *av, char **envp)
 	char	*location;
 	int		i;
 
-	if (av != NULL && av[0] != '\0')
+	if (!av || !*av)
 	{
-		command = ft_split(av, ' ');
-		location = find_loc(command[0], envp);
-		if (!location)
-		{
-			i = -1;
-			while (command[++i])
-				free(command[i]);
-			free(command);
-			error_127(av);
-		}
-		if (execve(location, command, envp) == -1)
-			error_exit("Can't Execute");
+		ft_putstr_fd("Empty command ignored\n", STDERR_FILENO);
+		exit(0);
 	}
+	command = ft_split(av, ' ');
+	location = find_loc(command[0], envp);
+	if (location == 0)
+	{
+		i = -1;
+		while (command[++i])
+			free(command[i]);
+		free(command);
+		error_127(av);
+	}
+	if (execve(location, command, envp) == -1)
+		error_exit("Can't Execute");
 }
 
 /* ft_strnstr() will find if "PATH" is present at the beginning of a

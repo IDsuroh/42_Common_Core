@@ -6,7 +6,7 @@
 #    By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/10 21:12:22 by suroh             #+#    #+#              #
-#    Updated: 2024/11/12 22:19:11 by suroh            ###   ########.fr        #
+#    Updated: 2024/11/26 21:24:31 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = pipex.c utils.c 
+SRC = pipex.c utils.c pipe_reader.c 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 OBJDIR = ./obj_files
 LIB = ./libft/

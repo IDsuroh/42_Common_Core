@@ -6,7 +6,7 @@
 /*   By: suroh <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:02:40 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/25 19:02:33 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/26 22:57:58 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 
 //Struct to hold Arguments
 typedef struct s_child_process_data
@@ -48,6 +51,9 @@ void	error_127(const char *msg);
 void	execute(char *av, char **envp);
 char	*find_loc(char *command, char **envp);
 int		get_child_exit_status(pid_t pid);
+
+//support function
+void	pipe_reader(int fd_in);
 
 //main functions
 void	child_process(char **av, char **envp, int *fd, int filein);
