@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/27 14:34:27 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:46:55 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_pipex(t_pipex *pipex, char **av)
 {
-	pipex->fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	pipex->fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (access(av[1], F_OK) != 0)
 	{
 		perror(av[1]);
