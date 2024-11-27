@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/27 01:08:03 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/27 14:34:27 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,14 @@ int	main(int ac, char **av, char **envp)
  * The envp array is populated automatically by the operating system
  * with all the environment variables that were present at the time
  * the program was started.
+ *
+ * Examples:
+ *
+ *   PATH=/usr/bin:/bin:/usr/local/bin
+ *   PATH: Lists directories the system searches for executable files.
+ *   HOME: Represents the current user’s home directory.
+ *   USER: Stores the name of the current user.
+ *   PWD: Contains the current working directory.
  *
  * the envp parameter is automatically recognized.
  * the envp pointer array holds all the environment variables that
