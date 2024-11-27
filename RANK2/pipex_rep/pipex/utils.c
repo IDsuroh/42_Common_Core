@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/27 00:49:48 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:39:39 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	error_127(const char *msg)
 {
+	write(STDERR_FILENO, "Cannot find such command: ", 26);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	write(STDERR_FILENO, "\n", 1);
 	exit(127);
@@ -21,8 +22,8 @@ void	error_127(const char *msg)
 
 void	error_exit(const char *msg)
 {
-	ft_putstr_fd(msg, 2);
-	write(1, "\n", 1);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 	exit(1);
 }
 
