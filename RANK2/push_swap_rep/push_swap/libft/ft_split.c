@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:41:26 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 21:37:37 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/28 13:38:25 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ char	**ft_split(const char *s, char c)
 // in the first place.
 // int	main()
 // {
-// 	char	*str = "ab__42cd__dfgdfg";
-// 	char	c = '_';
+// 	char	*str = "      1 3 -4    5 6 -9    ";
+// 	char	c = ' ';
 
 // 	// int	times = ft_blockcounter(str, c);
 // 	char	**new = ft_split(str, c);

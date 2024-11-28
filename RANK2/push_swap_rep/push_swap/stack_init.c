@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:53:16 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/21 19:54:21 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/28 14:05:52 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,6 @@ static long	ft_atol(const char *str)
 
 //my atolong function.
 
-/* The stack_init function take a Double Pointer **a because the purpose of the
- * function is likely to initialize a linked list or a stack structure.
- * This involves allocating memory for the first node and assigning the
- * address of that node to the pointer a. To achieve this, the function needs
- * to modify the original pointer a in main.
- * 
- * if stack_init took a single pointer:
- * 	a is modified locally inside the function.
- * 	The change is not reflected back in main because a is passed by value.
- *
- * with a double pointer:
- * 	*a refers to the original pointer a in main.
- * 	By dereferencing the double pointer, the function modifies
- * 	the actual value of a in main.
- * 	*/
-
 void	stack_init(t_stack_node **a, char **argv, bool is_argc_2)
 {
 	long	nbr;
@@ -80,6 +64,21 @@ void	stack_init(t_stack_node **a, char **argv, bool is_argc_2)
 		free_split(argv);
 }
 
+/* The stack_init function take a Double Pointer **a because the purpose of the
+ * function is likely to initialize a linked list or a stack structure.
+ * This involves allocating memory for the first node and assigning the
+ * address of that node to the pointer a. To achieve this, the function needs
+ * to modify the original pointer a in main.
+ * 
+ * if stack_init took a single pointer:
+ * 	a is modified locally inside the function.
+ * 	The change is not reflected back in main because a is passed by value.
+ *
+ * with a double pointer:
+ * 	*a refers to the original pointer a in main.
+ * 	By dereferencing the double pointer, the function modifies
+ * 	the actual value of a in main.
+ * 	*/
 /* if flag_argc_2 == true, it will free the newly made array
  * that was made in the int main by split function.
  * after structuring and linking the nodes.

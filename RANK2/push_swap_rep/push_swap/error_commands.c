@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 14:27:27 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/21 18:44:14 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/28 14:06:28 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_split(char **argv)
 		return ;
 	while (argv[i])
 		free(argv[i++]);
-	free(argv - 1);
+	free(argv);
 }
 
 /* this funciton frees the temporarily made arrays by the split function.
@@ -77,12 +77,15 @@ int	is_it_an_error(char *nbr_still_str)
 		&& !(nbr_still_str[1] >= '0' && nbr_still_str[1] <= '9'))
 		return (1);
 	i = 0;
+	if (nbr_still_str[0] == '+' || nbr_still_str[0] == '-')
+		i = 1;
 	while (nbr_still_str[i])
 	{
 		if (!(nbr_still_str[i] >= '0' && nbr_still_str[i] <= '9'))
 			return (1);
 		i++;
 	}
+
 	return (0);
 }
 

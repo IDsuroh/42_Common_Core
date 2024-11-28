@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:29:57 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/21 18:31:14 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/28 14:05:32 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ int	main(int argc, char **argv)
 	if (argc == 1 || (argc == 2 && !argv[1][0]))
 		return (1);
 	else if (argc == 2)
+	{
 		argv = ft_split(argv[1], ' ');
-	stack_init(&a, argv + 1, argc == 2);
+		stack_init(&a, argv, true);
+	}
+	else
+		stack_init(&a, argv + 1, false);
 	if (!stack_sorted(a))
 	{
 		if (stack_len(a) == 2)
@@ -36,6 +40,7 @@ int	main(int argc, char **argv)
 	free_stack(&a);
 	return (0);
 }
+
 
 /* If argc == 2, stack_init will check if argc is 2 or not and the new array
  * 	created by ft_split() must later be freed.
