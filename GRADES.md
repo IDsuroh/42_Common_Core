@@ -13,7 +13,7 @@ GRADES
 
   Rank 2:
 
-  fractol : 
+  fractol : 115 / 100
 
   pipex :
 
