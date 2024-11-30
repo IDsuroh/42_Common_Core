@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:28:15 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/25 00:26:57 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/29 23:38:18 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,23 @@ void	set_current_position(t_stack_node *stack)
 
 static void	target_setting(t_stack_node *a, t_stack_node *b)
 {
-	t_stack_node	*current_a_node;
+	t_stack_node	*target_a_stack;
 	t_stack_node	*target;
 	long			target_position;
 
 	while (b)
 	{
 		target_position = LONG_MAX;
-		current_a_node = a;
-		while (current_a_node)
+		target_a_stack = a;
+		while (target_a_stack)
 		{
-			if (current_a_node->info.nbr > b->info.nbr
-				&& current_a_node->info.nbr < target_position)
+			if (target_a_stack->info.nbr > b->info.nbr
+				&& target_a_stack->info.nbr < target_position)
 			{
-				target_position = current_a_node->info.nbr;
-				target = current_a_node;
+				target_position = target_a_stack->info.nbr;
+				target = target_a_stack;
 			}
-			current_a_node = current_a_node->links.next;
+			target_a_stack = target_a_stack->links.next;
 		}
 		if (target_position == LONG_MAX)
 			b->links.target = find_min_node(a);
@@ -70,7 +70,7 @@ static void	target_setting(t_stack_node *a, t_stack_node *b)
  * if there are no number that are bigger than the current 'b' node, it will
  * target the smallest node of stack 'a'.
  * if there are numbers that are bigger than the current 'b' node, the
- * while loop of current_a_node will run and narrow down the range untill there
+ * while loop of target_a_stack will run and narrow down the range untill there
  * is only one number that is bigger than the current 'b' node, which is
  * the closest biggest number to the current 'b' node.
  * 	*/

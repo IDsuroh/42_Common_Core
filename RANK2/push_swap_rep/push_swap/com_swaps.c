@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swaps.c                                            :+:      :+:    :+:   */
+/*   com_swaps.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 21:19:47 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/21 21:59:11 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/29 21:06:37 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ static void	swap(t_stack_node **head)
 	(*head)->links.next = (*head)->links.prev;
 	(*head)->links.prev = NULL;
 }
-
-/* head, is a pointer. at first it will point to the node next to the current.
- * Then in the second line;
- * 	(*head)->links.prev is the first node.
- *	Set first node->links.prev to point to second node.
- *
- *	(*head)->links.prev is Node 1. Node 1->links.prev is then set to Node 2.
- *	So, Node 2 comes first than Node 1.
- *	[Node2] -> [Node1]
- * After;
- *	since head(Node2)'s next is NULL, head's prev, Node 1, has its next
- *	pointed to NULL.
- * Then,
- * 	Node 2's next is set to Node 1. and Node 2's prev is set to NULL.
- * 	[Node2] <-> [Node1]
- * 	^head.
- *
- * if there is a third node;(if the head's next button is not NULL)
- * 	(Second node)head's next button is the third node and the prev button
- * 	is the first node.
- * 	So, it is directly linking Node 1 to Node 3.
- * 	update Node 3's prev button to Node 1.
- * Then head(Node 2)'s next will be the prev (Node 1) and head's prev will be
- * 	NULL.
- * Thus, completing this visualization.
- *
- * 	[Node2] <-> [Node1] <-> [Node3]
- *	 ^head
- * 	
- * 	*/	
 
 void	sa(t_stack_node **a, bool checker)
 {
@@ -85,3 +55,78 @@ void	ss(t_stack_node **a, t_stack_node **b, bool checker)
 }
 
 //sa and sb at the same time.
+// +------+     +------+     +------+     +------+
+// | Head | --> |  A   | <-> |  B   | <-> |  C   | <-> ...
+// +------+     +------+     +------+     +------+
+//                 ^             ^
+//                 |             |
+//           links.prev    links.next
+//
+//     *head points to A.
+//     A->links.next points to B.
+//     B->links.prev points to A.
+//
+// *head = (*head)->links.next;
+// +------+  -  +------+ - + +------+ - + +------+ - +
+// | NULL | <-> |  A   | <-> |  B   | <-> | NULL | <-> ...
+// +------+     +------+     +------+     +------+
+//                 				^
+//                 				|
+//           				New *head
+//
+// (*head)->links.prev->links.prev = *head;
+// +------+ -	+------+ -   +------+ - + +------+ - + +------+
+// | NULL |	<-A	|  B   | <-- |  A   | <-> |  B   | <-> | NULL  | <-> ...
+// +------+     +------+     +------+     +------+	   +------+
+//                 				^             ^
+//                 				|			  |
+//           			 B->links.prev	  New *head       
+//
+//     Update A->links.prev to point back to B:
+//
+// (*head)->links.prev->links.next = (*head)->links.next;
+// +------+ -	+------+ -   +------+ -   +------+ - + +------+
+// | NULL |	<-A	|  B   | <-- |  A   | <-- |  B   | <-> | NULL |
+// +------+     +------+     +------+ ->C +------+	   +------+
+//                 				^             ^
+//                 				|			  |
+//           			 B->links.prev	  New *head   
+//
+//     	Update A->links.next to point to C:
+// 		B is now skipped in A->links.next.
+//
+// if ((*head)->links.next)
+//     (*head)->links.next->links.prev = (*head)->links.prev;
+// +------+ -	+------+ -   +------+ -   +------+   + +------+
+// | NULL |	<-A	|  B   | <-- |  A   | <-- |  B   | --> |  C   | <-> ...
+// +------+     +------+     +------+ ->C +------+ A<- +------+
+//                 				^             ^			  ^
+//                 				|			  |			  |
+//           			 B->links.prev	  New *head      C->links.prev is A
+//
+//     (*head)->links.next refers to C.
+//     Update C->links.prev to point back to A:
+//
+// (*head)->links.next = (*head)->links.prev;
+// +------+ -	+------+ -   +------+ -   +------+   + +------+ - + +------+
+// | NULL |	<-A	|  B   | <-- |  A   | <-- |  B   | --> |  A	  |		| NULL |
+// +------+     +------+     +------+ ->C +------+     +------+		+------+
+//                 				^             ^			  
+//                 				|			  |			  
+//           			 B->links.prev	  New *head      
+// +------+ -	+------+ -      + +------+ - + +------+
+// | NULL |	<-A	|  B   | <--  --> |  A	 |	   | NULL |
+// +------+     +------+          +------+	   +------+
+//              	^            			  
+//              	|			 		  
+//           	New *head 
+//
+//     Update B->links.next to point to A:
+//
+// (*head)->links.prev = NULL;
+// +------+     +------+     +------+     +------+
+// | NULL | <-> |  B   | <-> |  A   | <-> |  C   | <-> ...
+// +------+     +------+     +------+     +------+
+//                 ^
+//                 |
+//           New *head

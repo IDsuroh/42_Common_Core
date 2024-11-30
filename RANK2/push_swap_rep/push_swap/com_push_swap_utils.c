@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_push_swap_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 00:14:18 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/25 00:21:27 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/29 23:59:50 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,3 +82,6 @@ void	sort_five(t_stack_node **a, t_stack_node **b)
 		pb(b, a, false);
 	}
 }
+//Setting the current position again in both the
+//reversing both stacks function is important because we have
+// to update whether the nodes are above or below middle.

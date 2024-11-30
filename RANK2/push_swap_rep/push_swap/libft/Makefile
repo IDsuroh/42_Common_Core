@@ -13,38 +13,38 @@ SRC_B = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
 	ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 
 OBJ = $(SRC:.c=.o)
-
 OBJ_B = $(SRC_B:.c=.o)
-
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "\033[33m-------------LIBFT--------------"
 	@ar crs $(NAME) $(OBJ)
-	@echo "Compilation Completed."
+	@echo "\033[32m------Compilation Complete------"
 
 bonus: $(OBJ_B)
 	@ar crs $(NAME) $(OBJ_B)
-	@echo "Bonus Comp. Completed."
+	@echo "\033[32m------Bonus Compilation Complete------"
 
 makeall: $(OBJ) $(OBJ_B)
 	@ar crs $(NAME) $(OBJ) $(OBJ_B)
-	@echo "Compiled Whole File."
+	@echo "\033[33m------Compiled Whole File------"
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJ) $(OBJ_B)
-	@echo "Obj files removed."
+	@rm -rf $(OBJ) $(OBJ_B)
+	@echo "\033[36m------All Obj files removed.------"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "-----------fclean------------"
 
 re: fclean all
 
 reall: fclean makeall
 
 .PHONY: all clean fclean re reall
-
-# .c.o:
-# 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-# why..

@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:29:57 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/28 14:05:32 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:25:39 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	free_stack(&a);
 	return (0);
 }
-
 
 /* If argc == 2, stack_init will check if argc is 2 or not and the new array
  * 	created by ft_split() must later be freed.

@@ -6,7 +6,7 @@
 #    By: suroh <suroh@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/27 18:06:45 by suroh             #+#    #+#              #
-#    Updated: 2024/11/27 19:43:37 by suroh            ###   ########.fr        #
+#    Updated: 2024/11/28 20:22:27 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ clean:
 fclean: clean
 		@rm -rf $(NAME)
 		@make fclean -C $(LIB)
-		@find . -type f ! -name "*.c" ! -name "*.h" ! -name "Makefile" ! -name "checker_linux" ! -path "./libft/*" -exec rm -f {} +
+		@find . -type f ! -name "push_swap_test_linux.sh" ! -name "*.c" ! -name "*.h" ! -name "Makefile" ! -name "checker_linux" ! -path "./libft/*" -exec rm -f {} +
 		@find . -type d ! -path "./libft" ! -path "." -exec rm -rf {} +
 		@echo "\033[34mCleaned Everything."
 

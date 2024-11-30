@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rev_rotates.c                                      :+:      :+:    :+:   */
+/*   com_rev_rotates.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:53:56 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/22 23:29:42 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/29 23:09:51 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ static void	reverse_rotate(t_stack_node **stack)
 	*stack = last_node;
 	last_node->links.next->links.prev = last_node;
 }
-
-/* [Node 1] <-> [Node 2] <-> [Node 3] <-> [Node 4]
- * ^stack				    ^last
- * [Node 1] <-> [Node 2] <-> [Node 3] -> NULL	[Node 4]
- * ^stack
- * [Node 1] <-> [Node 2] <-> [Node 3] -> NULL   [Node 4] -> [Node 1]
- * ^stack					  ^last	    ^stack
- * NULL <-> [Node 4] -> [Node 1] <-> [Node 2] <-> [Node 3]
- * 	    ^last	 ^stack
- * [Node 4] -> [Node 1] <-> [Node 2] <-> [Node 3]
- * ^last^stack
- * [Node 4] <-> [Node 1] <-> [Node 2] <-> [Node 3]
- * last line is important because it connects Node 1 to Node 4 (prev button)
- * 	*/
 
 void	rra(t_stack_node **a, bool checker)
 {
@@ -71,3 +57,45 @@ void	rrr(t_stack_node **a, t_stack_node **b, bool checker)
 }
 
 //rra and rrb at the same time.
+//Initial state of Stack;
+// Before reverse rotation:
+//
+// +------+     +------+     +------+     +------+
+// |  A   | --> |  B   | --> |  C   | --> |  D   |
+// +------+     +------+     +------+     +------+
+//   *stack       A->next       B->next       C->next
+//     ^                                        ^
+//     |                                        |
+//   A->prev = NULL                         D->next = NULL
+//
+// last_node = find_last_node(*stack);
+// +------+     +------+     +------+     +------+
+// |  A   | --> |  B   | --> |  C   | --> |  D   |
+// +------+     +------+     +------+     +------+
+//                                              ^
+//                                              |
+//                                            last_node
+//
+// last_node->links.prev->links.next = NULL;
+// After detaching the last node:
+//
+// +------+     +------+     +------+           +------+
+// |  A   | --> |  B   | --> |  C   | --> NULL  |  D   |
+// +------+     +------+     +------+           +------+
+//   *stack                                     last_node
+//
+// last_node->links.next = *stack;
+// last_node->links.prev = NULL;
+// +------+         +------+     +------+     +------+
+// |  D   | -->     |  A   | --> |  B   | --> |  C   |
+// +------+         +------+     +------+     +------+
+//   *stack         A->next       B->next       C->next
+//
+// last_node->links.next->links.prev = last_node;
+// Final state of the stack:
+//
+// +------+     +------+     +------+     +------+
+// |  D   | --> |  A   | --> |  B   | --> |  C   |
+// +------+     +------+     +------+     +------+
+//   *stack       A->prev       B->prev       C->prev
+//

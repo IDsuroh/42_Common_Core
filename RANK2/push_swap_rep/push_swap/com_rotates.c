@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_rotates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 22:06:43 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/22 22:52:33 by suroh            ###   ########.fr       */
+/*   Updated: 2024/11/30 00:09:03 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ static void	rotate(t_stack_node **stack)
 	last_node->links.next->links.prev = last_node;
 	last_node->links.next->links.next = NULL;
 }
-
-/* [Node1] <-> [Node2] <-> [Node3]
- *  ^stack
- *
- *   *stack points to Node1 (the first node).
- *   Node1->links.next points to Node2.
- *   Node3->links.next is NULL (end of the stack).
- *	last_node will be [Node 3]
- *	[Node 3]'s next will be pointed to [Node 1]
- *	[Node 1] <-> [Node 2] <-> [Node 3] -> [Node 1]
- *			^stack
- *	NULL <-> [Node 2] <-> [Node 3] -> [Node 1]
- *				Last
- *	NULL <-> [Node 2] <-> [Node 3] <-> [Node 1] <-> NULL
- *	Final : [Node 2] <-> [Node 3] <-> [Node 1]			
- * */
 
 void	ra(t_stack_node **a, bool checker)
 {
@@ -73,3 +57,52 @@ void	rr(t_stack_node **a, t_stack_node **b, bool checker)
 }
 
 //ra and rb at the same time.
+// Before rotation:
+// +------+     +------+     +------+     +------+     +------+
+// | Head | --> |  A   | <-> |  B   | <-> |  C   | <-> |  D   |
+// +------+     +------+     +------+     +------+     +------+
+//                 ^             ^             ^             ^
+//                 |             |             |             |
+//           *stack (Head)   A->links.next   B->links.next   C->links.next
+//
+// last_node = find_last_node(*stack);
+// +------+     +------+     +------+     +------+     +------+
+// | Head | --> |  A   | <-> |  B   | <-> |  C   | <-> |  D   |
+// +------+     +------+     +------+     +------+     +------+
+//                                                   		^
+//                                                 	    |
+//                                            		last_node (D)
+//
+// last_node->links.next = *stack;
+// +------+     +------+     +------+     +------+     +------+     +------+ 
+// | Head | --> |  A   | <-> |  B   | <-> |  C   | <-> |  D   | <-> |  A   |
+// +------+     +------+     +------+     +------+     +------+     +------+ 
+//                 ^                                            	    ^
+//                 |                                                    |
+//           *stack (Head)                          last_node->links.next
+//
+// *stack = (*stack)->links.next;
+// +------+     +------+     +------+     +------+     +------+     +------+ 
+// | Head | --X |  A   | <-> |  B   | <-> |  C   | <-> |  D   | <-> |  A   |
+// +------+     +------+     +------+     +------+     +------+     +------+ 
+//                 			 ^                                       ^
+//               				 |                                   |
+//           				*stack (Head)             last_node->links.next
+//
+// (*stack)->links.prev = NULL;
+// +------+     +------+     +------+     +------+     +------+
+// | Head | --> |  B   | <-> |  C   | <-> |  D   | --> |  A   |
+// +------+     +------+     +------+     +------+     +------+
+//                 ^
+//                 |
+//           New *stack (B)
+//
+// last_node->links.next->links.prev = last_node;
+// last_node->links.next->links.next = NULL;
+// +------+     +------+     +------+     +------+     +------+     +------+
+// | Head | --> |  B   | <-> |  C   | <-> |  D   | <-> |  A   | <-> | NULL |
+// +------+     +------+     +------+     +------+     +------+     +------+
+//                 ^                                 ^
+//                 |                                 |
+//           New *stack (B)                   New tail (A)
+//
