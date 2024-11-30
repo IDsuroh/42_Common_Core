@@ -14,4 +14,9 @@ GRADES
   Rank 2:
 
   fractol : 
+
+  pipex :
+
+  push_swap :
+  https://gitlab.com/nda-cunh/visualizer-push-swap <---- visualizer link
   </pre>
