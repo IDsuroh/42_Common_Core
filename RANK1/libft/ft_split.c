@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:41:26 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/12 21:37:37 by suroh            ###   ########.fr       */
+/*   Updated: 2024/12/02 21:29:28 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	ft_blockcounter(const char *s, char c)
 
 	i = 0;
 	counter = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 	{
 		while (s[i] == c)
@@ -49,30 +51,44 @@ static const char	*ft_skipper(const char *s, char c)
 	return (s);
 }
 
+static char	*allocate_block(const char *s, char c)
+{
+	int		count;
+	char	*block;
+
+	count = 0;
+	while (s[count] && s[count] != c)
+		count++;
+	block = (char *)ft_calloc(sizeof(char), (count + 1));
+	if (!block)
+		return (NULL);
+	ft_memmove(block, s, count);
+	block[count] = '\0';
+	return (block);
+}
+
 char	**ft_split(const char *s, char c)
 {
 	char	**mem;
 	int		i;
-	int		count;
 	int		blockcount;
 
+	if (!s)
+		return (NULL);
+	if (*s == '\0')
+		return (NULL);
 	blockcount = ft_blockcounter(s, c);
 	mem = (char **)ft_calloc(sizeof(char *), (blockcount + 1));
-	if (!mem || !s)
+	if (!mem)
 		return (NULL);
 	i = 0;
 	while (i < (blockcount))
 	{
-		count = 0;
 		s = ft_skipper(s, c);
-		while (s[count] && s[count] != c && s[count] != '\0')
-			count++;
-		mem[i] = (char *)ft_calloc(sizeof(char), (count + 1));
+		mem[i] = allocate_block(s, c);
 		if (!mem[i])
 			return (ft_free(mem, i));
-		ft_memmove(mem[i], s, count);
-		mem[i++][count] = '\0';
-		s += count;
+		s += ft_strlen(mem[i++]);
 	}
 	mem[i] = NULL;
 	return ((char **)mem);
@@ -83,10 +99,13 @@ char	**ft_split(const char *s, char c)
 // {
 // 	char	*str = "ab__42cd__dfgdfg";
 // 	char	c = '_';
-
-// 	// int	times = ft_blockcounter(str, c);
 // 	char	**new = ft_split(str, c);
-
+// 	// char	**new = ft_split(NULL, ' ');
+// 	if (!new)
+// 		printf("the result is NULL\n");
+// 	// ft_split("   ", ' ');
+// 	// ft_split("", ' ');
+// 	else{
 // 	int i = 0;
 // 	while (new[i] != NULL)
 // 	{
@@ -95,6 +114,7 @@ char	**ft_split(const char *s, char c)
 
 // 		free(new[i]);
 // 		i++;
+// 	}
 // 	}
 // 	//printf("\nyousuck; the output should be {ab, cd, ef}");
 // 	free (new);

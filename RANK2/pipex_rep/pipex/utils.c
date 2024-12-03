@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+        */
+/*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:34:54 by suroh             #+#    #+#             */
-/*   Updated: 2024/11/27 17:39:39 by suroh            ###   ########.fr       */
+/*   Updated: 2024/12/03 14:24:13 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	error_127(const char *msg)
-{
-	write(STDERR_FILENO, "Cannot find such command: ", 26);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
-	exit(127);
-}
-
-void	error_exit(const char *msg)
-{
-	ft_putstr_fd(msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
-	exit(1);
-}
-
-/*
- * simple error msg
- * 	*/
 
 int	get_child_exit_status(pid_t pid)
 {
@@ -42,19 +23,14 @@ int	get_child_exit_status(pid_t pid)
 	return (1);
 }
 
-char	*find_loc(char *command, char **envp)
+char	*find_in_path(char **full_path, char *command)
 {
-	char	**full_path;
 	char	*bin_path;
 	char	*path_tracker;
 	int		i;
 
-	i = 0;
-	while (envp[i] != NULL && ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	full_path = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (full_path[i])
+	i = -1;
+	while (full_path[++i])
 	{
 		path_tracker = ft_strjoin(full_path[i], "/");
 		bin_path = ft_strjoin(path_tracker, command);
@@ -62,20 +38,39 @@ char	*find_loc(char *command, char **envp)
 		if (access(bin_path, F_OK) == 0)
 			return (bin_path);
 		free(bin_path);
-		i++;
 	}
-	i = -1;
-	while (full_path[++i])
-		free(full_path[i]);
-	free(full_path);
-	return (0);
+	return (NULL);
 }
 
-void	execute(char *av, char **envp)
+char	**get_full_path(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
+		i++;
+	if (!envp[i] || !envp[i][5])
+		return (NULL);
+	return (ft_split(envp[i] + 5, ':'));
+}
+
+char	*find_loc(char *command, char **envp)
+{
+	char	**full_path;
+	char	*bin_path;
+
+	full_path = get_full_path(envp);
+	if (!full_path)
+		return (NULL);
+	bin_path = find_in_path(full_path, command);
+	free_split(full_path);
+	return (bin_path);
+}
+
+void	execute(char *av, char **envp, t_pipex *pipex)
 {
 	char	**command;
 	char	*location;
-	int		i;
 
 	if (!av || !*av)
 	{
@@ -83,17 +78,20 @@ void	execute(char *av, char **envp)
 		exit(0);
 	}
 	command = ft_split(av, ' ');
+	if (!command)
+		error_exit("Command Parsing Failed", pipex);
 	location = find_loc(command[0], envp);
-	if (location == 0)
+	if (!location)
 	{
-		i = -1;
-		while (command[++i])
-			free(command[i]);
-		free(command);
-		error_127(av);
+		free_split(command);
+		error_127(av, pipex);
 	}
 	if (execve(location, command, envp) == -1)
-		error_exit("Can't Execute");
+	{
+		free(location);
+		free_split(command);
+		error_exit("Can't Execute", pipex);
+	}
 }
 
 /* ft_strnstr() will find if "PATH" is present at the beginning of a

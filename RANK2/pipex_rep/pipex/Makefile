@@ -3,27 +3,30 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: suroh <suroh@student.42lisboa.com>         +#+  +:+       +#+         #
+#    By: suroh <suroh@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/10 21:12:22 by suroh             #+#    #+#              #
-#    Updated: 2024/11/26 21:24:31 by suroh            ###   ########.fr        #
+#    Updated: 2024/12/03 16:25:53 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
-SRC = pipex.c utils.c pipe_reader.c 
+SRC = pipex.c utils.c helpers.c errors.c
+SRCDIR = ./src_files
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 OBJDIR = ./obj_files
 LIB = ./libft/
 LIBFT = ./libft/libft.a
 
-all: obj $(NAME)
+all: dirs $(NAME)
 
-obj:
+dirs:
 	@mkdir -p $(OBJDIR)
+	@mkdir -p $(SRCDIR)
+	@mv $(SRC) $(SRCDIR)/
 
 $(NAME): $(OBJ)
 	@echo "\033[33m------Compiling LIBFT------"
@@ -39,6 +42,7 @@ clean:
 	@echo "\033[35mCleaned Object Files."
 
 fclean: clean
+	@mv $(addprefix $(SRCDIR)/, $(SRC)) ./
 	@rm -rf $(NAME)
 	@make fclean -C $(LIB)
 	@find . -type f ! -name "*.c" ! -name "*.h" ! -name "Makefile" ! -path "./libft/*" -exec rm -f {} +
