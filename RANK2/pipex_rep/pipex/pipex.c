@@ -6,7 +6,7 @@
 /*   By: suroh <suroh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 21:42:05 by suroh             #+#    #+#             */
-/*   Updated: 2024/12/03 16:19:15 by suroh            ###   ########.fr       */
+/*   Updated: 2024/12/03 16:47:06 by suroh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ int	main(int ac, char **av, char **envp)
 	close_fds_files(&pipex);
 }
 
+//valgrind --leak-check=full --show-reachable=yes --track-origins=yes
+//--trace-children=yes  --track-fds=yes
+//./pipex file1 "ls -l" "wc -l" file2 
+//
 // run; valgrind usr/bin/"The Command that makes reachable memories"
 //
 //
