@@ -6,7 +6,7 @@
 #    By: suroh <suroh@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/27 18:06:45 by suroh             #+#    #+#              #
-#    Updated: 2024/11/28 20:22:27 by suroh            ###   ########.fr        #
+#    Updated: 2024/12/03 22:33:09 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,18 @@ CFLAGS 	= -Wall -Werror -Wextra
 LIB		= ./libft/
 LIBFT	= ./libft/libft.a
 
-all: obj $(NAME)
+all: $(NAME)
 
-obj:
-		@mkdir -p $(OBJDIR)
-
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBFT)
 		@echo "\033[33m------Compiling LIBFT------"
-		@make reall -C $(LIB)
 		@$(CC) $(OBJ) $(LIBFT) -o $(NAME)
 		@echo "\033[32m------Compilation Complete------"
 
+$(LIBFT):
+		@make makeall -C $(LIB)
+
 $(OBJDIR)/%.o: %.c
+	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
