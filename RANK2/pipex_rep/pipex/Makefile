@@ -6,7 +6,7 @@
 #    By: suroh <suroh@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/10 21:12:22 by suroh             #+#    #+#              #
-#    Updated: 2024/12/03 16:34:27 by suroh            ###   ########.fr        #
+#    Updated: 2024/12/04 10:12:48 by suroh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,19 @@ OBJDIR = ./obj_files
 LIB = ./libft/
 LIBFT = ./libft/libft.a
 
-all: dirs $(NAME)
+all: $(NAME)
 
-dirs:
-	@mkdir -p $(OBJDIR)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBFT)
 	@echo "\033[33m------Compiling LIBFT------"
-	@make reall -C $(LIB)
 	@$(CC) $(OBJ) $(LIBFT) -o $(NAME)
 	@echo "\033[32m------Compilation Complete------"
 
+$(LIBFT):
+	@make makeall -C $(LIB)
+
 $(OBJDIR)/%.o: %.c
+	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
